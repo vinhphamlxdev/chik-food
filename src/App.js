@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./styles/GlobalStyles";
+import { Fragment } from "react";
+import { Route, Routes } from "react-router-dom";
+import { lightTheme } from "themes/themesData";
+import Home from "pages/home";
+import Collection from "pages/collection";
+import ShopPage from "pages/shop";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyles></GlobalStyles>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/collection" element={<Collection />}></Route>
+          <Route path="/shop" element={<ShopPage />}></Route>
+        </Routes>
+      </ThemeProvider>
+    </Fragment>
   );
 }
 
