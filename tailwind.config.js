@@ -7,6 +7,8 @@ module.exports = {
         primary: "#d60508",
         slideBg: "rgba(0, 0, 0, 0.8)",
         textPrimary: "#292929",
+        secondary: "#fcb917",
+        third: "#000000",
       },
     },
   },

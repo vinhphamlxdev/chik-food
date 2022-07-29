@@ -8,13 +8,24 @@ export const GlobalClasses = css`
   i {
     line-height: 0px;
   }
+  h3 {
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  img {
+    object-fit: cover;
+  }
+  .transition-5 {
+    transition: 0.5s all;
+  }
   .wrapper-layout {
     display: block;
-    max-width: 1200px;
+    max-width: 1300px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
   .center {
     position: absolute;

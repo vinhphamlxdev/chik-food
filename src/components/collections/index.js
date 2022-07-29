@@ -159,7 +159,7 @@ const Collections = () => {
           ))}
         </div>
       </div>
-      <div className="flex mt-10 collection-banner gap-x-7">
+      <div className="flex mt-10 collection-banner gap-x-5">
         <div className="relative cursor-pointer banner-half">
           <img className="object-cover" src={banner1} alt="" />
         </div>
@@ -169,7 +169,7 @@ const Collections = () => {
               const { id, title, subTitle, url } = banner;
               return (
                 <div key={id} className="relative cursor-pointer h-[375px] ">
-                  <img src={url} alt="" />
+                  <img className="object-cover w-full" src={url} alt="" />
                   <div className="absolute top-[13%] px-[60px] z-10">
                     <div className="flex flex-col gap-y-5">
                       <h2 className="text-[27px] font-semibold leading-[1] text-primary">
