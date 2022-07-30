@@ -1,6 +1,5 @@
 import React from "react";
 import CollectionTitle from "./CollectionTitle";
-import chicken from "assets/chicken.webp";
 import styled from "styled-components";
 import Button from "components/button";
 import banner1 from "assets/banner1.webp";
@@ -137,7 +136,7 @@ const Collections = () => {
   return (
     <StyledCollection className="pt-10">
       <div className="wrapper-layout">
-        <CollectionTitle img={chicken} title="The Sound of Taste" />
+        <CollectionTitle title="The Sound of Taste" />
         <div className="grid grid-cols-3 gap-x-7">
           {collectionData.map((item) => (
             <div key={item.id} className="relative text-center collection-item">

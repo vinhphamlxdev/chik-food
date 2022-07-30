@@ -1,7 +1,6 @@
 import CollectionTitle from "components/collections/CollectionTitle";
 import React from "react";
 import styled from "styled-components";
-import star from "assets/progress/star.webp";
 import { productData } from "./data";
 import Button from "components/button";
 const StyledSelling = styled.div`
@@ -69,7 +68,7 @@ const TopSell = () => {
   return (
     <StyledSelling className="mt-10">
       <div className="wrapper-layout">
-        <CollectionTitle title="Top Selling" img={star} />
+        <CollectionTitle title="Top Selling" isStar />
         <div className="flex justify-center mb-12 gap-x-5">
           <Button className="btn-menu">Chicken Meal </Button>
           <Button className="btn-menu">Chicken Meal </Button>

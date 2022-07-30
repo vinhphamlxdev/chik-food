@@ -34,7 +34,7 @@ const BannerItem = ({
         className={`absolute cursor-pointer  ${
           wFull ? "w-full" : "w-[70%]"
         } bottom-0 p-8 bg-black bg-opacity-80 ${
-          positionLeft ? "left-0" : "right-0"
+          positionLeft ? "left-0 w-4/12" : "right-0"
         }`}
       >
         <h3 className="mb-4 text-white leading-[1.3] cursor-pointer ">

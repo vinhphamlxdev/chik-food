@@ -1,7 +1,6 @@
 import CollectionTitle from "components/collections/CollectionTitle";
 import React from "react";
 import styled from "styled-components";
-import star from "assets/chickenStar.webp";
 import { chickenMealData } from "./data";
 import Button from "components/button";
 const StyledMenu = styled.div`
@@ -70,7 +69,7 @@ const Menu = () => {
   return (
     <StyledMenu>
       <div className="wrapper-layout">
-        <CollectionTitle img={star} title="Our Special Menu"></CollectionTitle>
+        <CollectionTitle isStar title="Our Special Menu" />
         <div className="flex justify-center gap-x-5">
           <Button className="btn-menu">Chicken Meal </Button>
           <Button className="btn-menu">Chicken Meal </Button>
