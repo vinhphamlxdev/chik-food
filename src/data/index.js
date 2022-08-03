@@ -49,7 +49,7 @@ import product24a from "assets/allProduct/product24a.webp";
 import product25 from "assets/allProduct/product25.webp";
 import product25a from "assets/allProduct/product25a.webp";
 
-export const ProductData = [
+export const ProductsData = [
   {
     id: 1,
     img: `${product1}`,

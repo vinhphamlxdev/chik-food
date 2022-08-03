@@ -4,6 +4,7 @@ export const GlobalClasses = css`
   p {
     font-size: 16px;
     font-weight: 300;
+    color: ${(props) => props.theme.textPrimary};
   }
   h1,
   .h1,
@@ -18,6 +19,7 @@ export const GlobalClasses = css`
   h6,
   .h6 {
     line-height: 1.3;
+    color: ${(props) => props.theme.textPrimary};
   }
   i {
     line-height: 0px;

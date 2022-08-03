@@ -7,4 +7,5 @@ export const lightTheme = {
   primary: "#d60508",
   textTitle: "#000000",
   borderCol: "#fcb917",
+  bgModal: "#fff",
 };
