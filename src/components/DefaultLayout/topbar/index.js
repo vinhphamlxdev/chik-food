@@ -23,7 +23,7 @@ const StyledTopbar = styled.div`
 const Topbar = () => {
   return (
     <StyledTopbar className="w-full px-4 py-1">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="mr-[10px] cursor-pointer">
             <AiOutlineTwitter className="text-2xl text-white pr-[10px]" />
@@ -39,7 +39,7 @@ const Topbar = () => {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="px-4 flex items-center text-base font-light  topbar-select ">
+          <div className="flex items-center px-4 text-base font-light topbar-select ">
             USD
             <i className="bi leading-[0px] text-lg ml-1 icon-select bi-chevron-down"></i>
           </div>

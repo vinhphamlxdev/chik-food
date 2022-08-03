@@ -7,6 +7,9 @@ import { lightTheme } from "themes/themesData";
 import Home from "pages/home";
 import Collection from "pages/collection";
 import ShopPage from "pages/shop";
+import BackTop from "components/backTop";
+import { publicRoutes } from "routes";
+import DefaultLayout from "components/DefaultLayout";
 
 function App() {
   return (
@@ -14,9 +17,20 @@ function App() {
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles></GlobalStyles>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/collection" element={<Collection />}></Route>
-          <Route path="/shop" element={<ShopPage />}></Route>
+          {publicRoutes.map((route, index) => {
+            const Page = route.component;
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <DefaultLayout>
+                    <Page />
+                  </DefaultLayout>
+                }
+              ></Route>
+            );
+          })}
         </Routes>
       </ThemeProvider>
     </Fragment>

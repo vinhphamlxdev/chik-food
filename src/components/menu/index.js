@@ -79,7 +79,6 @@ const Menu = () => {
         <div className="grid grid-cols-2 gap-x-3 gap-y-5 ">
           {chickenMealData.map((item) => {
             const { id, image, addImg, price, title } = item;
-            console.log(item);
             return (
               <div
                 key={id}

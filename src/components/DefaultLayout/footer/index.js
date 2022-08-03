@@ -10,7 +10,7 @@ import payment2 from "assets/footer/payment2.webp";
 import payment3 from "assets/footer/payment3.webp";
 import payment4 from "assets/footer/payment4.webp";
 import payment5 from "assets/footer/payment5.webp";
-const StyledFooter = styled.div`
+const StyledFooter = styled.footer`
   background-image: url(${footerImg});
   background-attachment: fixed;
   background-repeat: no-repeat;

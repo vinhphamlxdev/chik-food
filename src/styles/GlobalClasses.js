@@ -5,6 +5,20 @@ export const GlobalClasses = css`
     font-size: 16px;
     font-weight: 300;
   }
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    line-height: 1.3;
+  }
   i {
     line-height: 0px;
   }

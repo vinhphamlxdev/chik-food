@@ -15,6 +15,7 @@ body {
   line-height: 1.7;
   font-size: 18px;
   font-family: "Josefin Sans", sans-serif;
+  scroll-behavior: smooth;
 }
 img,
 picture,

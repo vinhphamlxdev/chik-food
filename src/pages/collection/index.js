@@ -1,7 +1,12 @@
-import React from "react";
+import CollectionProduct from "components/collectionProduct";
+import React, { Fragment } from "react";
 
 const Collection = () => {
-  return <div></div>;
+  return (
+    <Fragment>
+      <CollectionProduct />
+    </Fragment>
+  );
 };
 
 export default Collection;
