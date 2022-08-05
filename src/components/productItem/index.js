@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setShowModal } from "redux-toolkit/global/globalSlice";
+import { setProductInfo, setShowModal } from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
 const StyledProducts = styled.div`
   transition: 0.5s all;
@@ -52,21 +52,21 @@ const StyledProducts = styled.div`
 `;
 const ProductItem = ({ items = [] }) => {
   const dispatch = useDispatch();
-  const handleShowModal = () => {
+  const handleShowModal = (data) => {
     dispatch(setShowModal(true));
+    dispatch(setProductInfo(data));
   };
-  console.log(items);
   return (
     <>
       {items.map((item, index) => {
-        const { id, img, addImg, title, price } = item;
+        const { id, productImage = [], title, price } = item;
         return (
           <StyledProducts key={id} className="relative products-item">
             <div className="absolute add-cart-list   flex z-20 flex-col gap-y-[2px] top-[2px]">
               <Icon>
                 <i className="text-sm bi text-inherit leading-[0px] bi-cart-plus-fill"></i>
               </Icon>
-              <Icon onClick={handleShowModal}>
+              <Icon onClick={() => handleShowModal(item)}>
                 <i className="text-sm  text-inherit leading-[0px]  bi bi-eye"></i>
               </Icon>
               <Icon>
@@ -75,9 +75,9 @@ const ProductItem = ({ items = [] }) => {
             </div>
             <div className="relative overflow-hidden product-img">
               <div className="product-add">
-                <img src={addImg} alt="" />
+                <img src={productImage[1]} alt="" />
               </div>
-              <img src={img} alt="" />
+              <img src={productImage[0]} alt="" />
             </div>
             <div className="px-[10px] products-content bg-[#f4f4f4] py-5 flex flex-col items-center">
               <span className="text-sm transition-5 cursor-pointer font-semibold mb-4 tracking-[0px] title">

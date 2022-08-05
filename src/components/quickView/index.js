@@ -1,5 +1,6 @@
 import Button from "components/button";
-import React, { useEffect } from "react";
+import SetQuantity from "components/setQuantity";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowModal } from "redux-toolkit/global/globalSlice";
@@ -39,44 +40,28 @@ const StyledQuickView = styled.div`
       font-size: 13px;
       font-weight: 600;
     }
-    .btn-inc,
-    .btn-dec {
-      line-height: 0;
-      font-weight: 300;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid #e4e4e4;
-      cursor: pointer;
-      text-align: center;
-      width: 40px;
-      height: 40px;
-      transition: all 0.4s ease-in-out;
-    }
-    .quickview-quantity {
-      font-weight: 300;
-      border-top: 1px solid #e4e4e4;
-      border-bottom: 1px solid #e4e4e4;
-      text-align: center;
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
-    }
-    input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-    }
+
     .close-modal {
       color: ${(props) => props.theme.textPrimary};
+    }
+    .product-preview.active {
+      border: 1px solid ${(props) => props.theme.primary};
     }
   }
 `;
 const QuickView = ({ data = [] }) => {
   const dispatch = useDispatch();
-  const { showModal } = useSelector((state) => state.global);
-  console.log(showModal);
+  const { showModal, productInfo } = useSelector((state) => state.global);
+  const { productImage = [], title, price } = productInfo;
+  const [currentImg, setCurrentImg] = useState("");
+  useEffect(() => {
+    setCurrentImg(productImage[0]);
+  }, [productImage]);
   const handleCloseModal = () => {
     dispatch(setShowModal(false));
+  };
+  const handlePreviewProduct = (newProduct) => {
+    setCurrentImg(newProduct);
   };
 
   if (typeof document === "undefined")
@@ -98,31 +83,23 @@ const QuickView = ({ data = [] }) => {
         <div className="grid grid-cols-2 gap-x-5">
           <div className="flex flex-col">
             <div className="relative max-h-[500px]">
-              <img
-                src="https://cdn.shopify.com/s/files/1/0016/3387/8116/products/product14_95afe317-8b68-45cd-9c84-e69826158a07_grande.jpg"
-                alt=""
-              />
+              <img src={currentImg} alt="" />
             </div>
             <div className="flex justify-start gap-x-4">
-              <div className="relative cursor-pointer">
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0016/3387/8116/products/product14_95afe317-8b68-45cd-9c84-e69826158a07_medium.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="relative cursor-pointer">
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0016/3387/8116/products/product6_medium.jpg"
-                  alt=""
-                />
-              </div>
+              {productImage.map((item, index) => (
+                <div
+                  onClick={() => handlePreviewProduct(item)}
+                  key={index}
+                  className={`relative product-preview max-h-[200px] overflow-hidden cursor-pointer `}
+                >
+                  <img className="h-full" src={item} alt="" />
+                </div>
+              ))}
             </div>
           </div>
           <div className="flex flex-col quickview-desc">
-            <h3 className="mb-4 quickview-title text-[27px]">
-              Party Meal Grill
-            </h3>
-            <p className="mb-5 text-[13px]">
+            <h3 className="mb-4 quickview-title text-[27px]">{title}</h3>
+            <p className="mb-5 text-[13px] text-justify">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -132,7 +109,7 @@ const QuickView = ({ data = [] }) => {
               <p className="text-base font-semibold quickview-header">
                 Effective Price :
               </p>
-              <h2 className="text-sm font-semibold">$529.00</h2>
+              <h2 className="text-sm font-semibold">{price}</h2>
             </div>
             <div className="flex items-center mb-5">
               <p className="text-base font-semibold quickview-header">
@@ -149,15 +126,7 @@ const QuickView = ({ data = [] }) => {
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Quantity</h3>
-                <div className="flex items-center">
-                  <div className="btn-dec">-</div>
-                  <input
-                    className="quickview-quantity"
-                    type="number"
-                    value={1}
-                  />
-                  <div className="btn-inc">+</div>
-                </div>
+                <SetQuantity />
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Subtotal:</h3>

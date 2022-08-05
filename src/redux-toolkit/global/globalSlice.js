@@ -5,6 +5,8 @@ export const globalSlice = createSlice({
     bgHeader: false,
     showBackTop: false,
     showModal: false,
+    productInfo: [],
+    currentProduct: "",
   },
   reducers: {
     setBgHeader: (state, action) => {
@@ -16,7 +18,14 @@ export const globalSlice = createSlice({
     setShowModal: (state, action) => {
       state.showModal = action.payload;
     },
+    setProductInfo: (state, action) => {
+      state.productInfo = action.payload;
+    },
+    setCurrentProduct: (state, action) => {
+      state.currentProduct = action.payload;
+    },
   },
 });
-export const { setBgHeader, setBackTop, setShowModal } = globalSlice.actions;
+export const { setBgHeader, setBackTop, setShowModal, setProductInfo } =
+  globalSlice.actions;
 export default globalSlice.reducer;

@@ -49,6 +49,11 @@ export const GlobalClasses = css`
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   //slick slider home banner
   .next-btn {
     position: absolute;
