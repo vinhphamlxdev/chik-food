@@ -14,6 +14,7 @@ const CartItem = ({ item = {} }) => {
   const { id, productImage, price, title, quantity } = item;
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItem(productId));
+    console.log(productId);
   };
   return (
     <StyledCartItem className="flex cart-row">

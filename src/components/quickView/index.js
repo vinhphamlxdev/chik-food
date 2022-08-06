@@ -3,7 +3,7 @@ import SetQuantity from "components/setQuantity";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setShowModal } from "redux-toolkit/global/globalSlice";
+import { setCartList, setShowModal } from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
 const StyledQuickView = styled.div`
   width: 100%;
@@ -56,6 +56,7 @@ const QuickView = ({ data = [] }) => {
   const dispatch = useDispatch();
   const { showModal, productInfo } = useSelector((state) => state.global);
   const { productImage = [], title, price } = productInfo;
+  console.log(productInfo);
   const [currentImg, setCurrentImg] = useState("");
   useEffect(() => {
     setCurrentImg(productImage[0]);
@@ -65,6 +66,7 @@ const QuickView = ({ data = [] }) => {
   };
   const handlePreviewProduct = (newProduct) => {
     setCurrentImg(newProduct);
+    dispatch(setCartList(newProduct));
   };
 
   if (typeof document === "undefined")

@@ -55,7 +55,6 @@ const StyledProducts = styled.div`
   }
 `;
 const ProductItem = ({ items = [] }) => {
-  const { cartList } = useSelector((state) => state.global);
   // console.log("cart list", cartList);
   const dispatch = useDispatch();
   const handleShowModal = (productItem) => {
@@ -63,7 +62,6 @@ const ProductItem = ({ items = [] }) => {
     dispatch(setProductInfo(productItem));
   };
   const handleAddProduct = (productItem) => {
-    // console.log(productItem);
     dispatch(setCartList(productItem));
   };
   return (

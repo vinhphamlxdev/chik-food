@@ -35,11 +35,12 @@ export const globalSlice = createSlice({
     },
     removeCartItem: (state, action) => {
       let cartUpdate = [...state.cartList];
+      console.log(cartUpdate);
       let index = cartUpdate.findIndex(
-        (product) => product.id === action.payload.id
+        (product) => product.id === action.payload
       );
       if (index !== -1) {
-        cartUpdate.slice(index, 1);
+        cartUpdate.splice(index, 1);
       }
       state.cartList = cartUpdate;
     },

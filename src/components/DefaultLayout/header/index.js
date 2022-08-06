@@ -3,6 +3,7 @@ import styled from "styled-components";
 import logo from "assets/logo.webp";
 import { navbarData } from "./navBarData";
 import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 const StyledHeader = styled.header`
   width: 100%;
   z-index: 99;
@@ -38,6 +39,8 @@ const StyledHeader = styled.header`
   }
 `;
 const Header = () => {
+  const state = useSelector((state) => state.global);
+  const quantity = state.cartList;
   return (
     <StyledHeader>
       <div className="wrapper-layout">
@@ -62,8 +65,11 @@ const Header = () => {
             <div className="py-6 px-[10px] text-inherit">
               <i className="text-lg cursor-pointer bi text-inherit bi-search"></i>
             </div>
-            <Link to="/cart" className="py-6 px-[10px] text-inherit">
+            <Link to="/cart" className="py-6 relative px-[10px] text-inherit">
               <i className="bi leading-[0px] cursor-pointer text-lg text-inherit bi-cart-plus-fill"></i>
+              <span className="absolute top-4 right-1 flex items-center justify-center w-4 leading-[0] h-4 text-sm font-light text-white rounded-full bg-primary">
+                {quantity.length}
+              </span>
             </Link>
             <div className="py-6 px-[10px] text-inherit">
               <i className="bi text-lg text-inherit leading-[0px] cursor-pointer bi-person-fill"></i>
