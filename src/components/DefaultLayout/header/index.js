@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import logo from "assets/logo.webp";
 import { navbarData } from "./navBarData";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const StyledHeader = styled.header`
   width: 100%;
   z-index: 99;
@@ -62,9 +62,9 @@ const Header = () => {
             <div className="py-6 px-[10px] text-inherit">
               <i className="text-lg cursor-pointer bi text-inherit bi-search"></i>
             </div>
-            <div className="py-6 px-[10px] text-inherit">
+            <Link to="/cart" className="py-6 px-[10px] text-inherit">
               <i className="bi leading-[0px] cursor-pointer text-lg text-inherit bi-cart-plus-fill"></i>
-            </div>
+            </Link>
             <div className="py-6 px-[10px] text-inherit">
               <i className="bi text-lg text-inherit leading-[0px] cursor-pointer bi-person-fill"></i>
             </div>

@@ -5,8 +5,8 @@ export const globalSlice = createSlice({
     bgHeader: false,
     showBackTop: false,
     showModal: false,
-    productInfo: [],
-    currentProduct: "",
+    productInfo: {},
+    cartList: [],
   },
   reducers: {
     setBgHeader: (state, action) => {
@@ -21,11 +21,36 @@ export const globalSlice = createSlice({
     setProductInfo: (state, action) => {
       state.productInfo = action.payload;
     },
-    setCurrentProduct: (state, action) => {
-      state.currentProduct = action.payload;
+    setCartList: (state, action) => {
+      // chưa có thì push vào, đã có tăng số lượng
+      let index = state.cartList.findIndex(
+        (product) => product.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.cartList[index].quantity += 1;
+      } else {
+        // state.cartList.push(action.payload);
+        state.cartList = [...state.cartList, action.payload];
+      }
+    },
+    removeCartItem: (state, action) => {
+      let cartUpdate = [...state.cartList];
+      let index = cartUpdate.findIndex(
+        (product) => product.id === action.payload.id
+      );
+      if (index !== -1) {
+        cartUpdate.slice(index, 1);
+      }
+      state.cartList = cartUpdate;
     },
   },
 });
-export const { setBgHeader, setBackTop, setShowModal, setProductInfo } =
-  globalSlice.actions;
+export const {
+  setBgHeader,
+  setBackTop,
+  setShowModal,
+  setProductInfo,
+  setCartList,
+  removeCartItem,
+} = globalSlice.actions;
 export default globalSlice.reducer;

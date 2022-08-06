@@ -1,7 +1,11 @@
 import Icon from "components/Icon";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { setProductInfo, setShowModal } from "redux-toolkit/global/globalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCartList,
+  setProductInfo,
+  setShowModal,
+} from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
 const StyledProducts = styled.div`
   transition: 0.5s all;
@@ -51,10 +55,16 @@ const StyledProducts = styled.div`
   }
 `;
 const ProductItem = ({ items = [] }) => {
+  const { cartList } = useSelector((state) => state.global);
+  // console.log("cart list", cartList);
   const dispatch = useDispatch();
-  const handleShowModal = (data) => {
+  const handleShowModal = (productItem) => {
     dispatch(setShowModal(true));
-    dispatch(setProductInfo(data));
+    dispatch(setProductInfo(productItem));
+  };
+  const handleAddProduct = (productItem) => {
+    // console.log(productItem);
+    dispatch(setCartList(productItem));
   };
   return (
     <>
@@ -63,7 +73,7 @@ const ProductItem = ({ items = [] }) => {
         return (
           <StyledProducts key={id} className="relative products-item">
             <div className="absolute add-cart-list   flex z-20 flex-col gap-y-[2px] top-[2px]">
-              <Icon>
+              <Icon onClick={() => handleAddProduct(item)}>
                 <i className="text-sm bi text-inherit leading-[0px] bi-cart-plus-fill"></i>
               </Icon>
               <Icon onClick={() => handleShowModal(item)}>
@@ -84,7 +94,7 @@ const ProductItem = ({ items = [] }) => {
                 {title}
               </span>
               <div className="text-xl font-medium transition-5 price">
-                {price}
+                ${price.toLocaleString()}
               </div>
               <div className="flex py-2">
                 {Array(5)

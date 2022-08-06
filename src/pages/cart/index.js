@@ -1,9 +1,11 @@
 import React from "react";
 import TitlePage from "components/titlePage";
-import CartItem from "./cartItem";
 import Button from "components/button";
+import { useSelector } from "react-redux";
+import CartItem from "./cartItem";
 
 const CartPage = () => {
+  const { cartList } = useSelector((state) => state.global);
   return (
     <>
       <TitlePage title="Your Shopping Cart" subTitle="Your Shopping Cart" />
@@ -29,7 +31,16 @@ const CartPage = () => {
                 </div>
               </div>
             </div>
-            <CartItem />
+            {cartList.length > 0 ? (
+              cartList.map((item, index) => {
+                return <CartItem key={index} item={item} />;
+              })
+            ) : (
+              <div className="my-3 text-2xl font-semibold text-center text-textPrimary">
+                No product in the cart
+              </div>
+            )}
+
             <div className="flex flex-col items-end mt-5 gap-y-4">
               <div className="flex items-center gap-x-2">
                 <h3 className="text-lg font-medium">Subtotal :</h3>

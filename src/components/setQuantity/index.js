@@ -29,13 +29,22 @@ const StyledSetQuan = styled.div`
     -webkit-appearance: none;
   }
 `;
-const SetQuantity = ({ handleInc = () => {}, handleDec = () => {} }) => {
+const SetQuantity = ({
+  handleInc = () => {},
+  handleDec = () => {},
+  quantity = 1,
+}) => {
   return (
     <StyledSetQuan className="flex items-center">
       <div onClick={handleDec} className="btn-dec">
         -
       </div>
-      <input className="quickview-quantity" type="number" value={1} />
+      <input
+        onChange={() => {}}
+        className="quickview-quantity"
+        type="number"
+        value={quantity}
+      />
       <div onClick={handleInc} className="btn-inc">
         +
       </div>

@@ -44,6 +44,9 @@ const StyledQuickView = styled.div`
     .close-modal {
       color: ${(props) => props.theme.textPrimary};
     }
+    .product-preview {
+      border: 1px solid transparent;
+    }
     .product-preview.active {
       border: 1px solid ${(props) => props.theme.primary};
     }
@@ -86,15 +89,19 @@ const QuickView = ({ data = [] }) => {
               <img src={currentImg} alt="" />
             </div>
             <div className="flex justify-start gap-x-4">
-              {productImage.map((item, index) => (
-                <div
-                  onClick={() => handlePreviewProduct(item)}
-                  key={index}
-                  className={`relative product-preview max-h-[200px] overflow-hidden cursor-pointer `}
-                >
-                  <img className="h-full" src={item} alt="" />
-                </div>
-              ))}
+              {productImage.map((item, index) => {
+                return (
+                  <div
+                    onClick={() => handlePreviewProduct(item)}
+                    key={index}
+                    className={`relative product-preview max-h-[200px] overflow-hidden cursor-pointer ${
+                      item === currentImg ? "active" : ""
+                    } `}
+                  >
+                    <img className="h-full" src={item} alt="" />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="flex flex-col quickview-desc">
