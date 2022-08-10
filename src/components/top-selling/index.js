@@ -1,9 +1,9 @@
-import CollectionTitle from "components/collections/CollectionTitle";
 import React from "react";
+import CollectionTitle from "components/collections/CollectionTitle";
 import styled from "styled-components";
-import { productData } from "./data";
 import Button from "components/button";
 import ProductItem from "components/productItem";
+import { ProductsData } from "data";
 const StyledSelling = styled.div`
   & .btn-menu {
     background-color: #fff;
@@ -19,6 +19,8 @@ const StyledSelling = styled.div`
   }
 `;
 const TopSell = () => {
+  const productSell = ProductsData.slice(0, 8);
+  console.log(productSell);
   return (
     <StyledSelling className="mt-10">
       <div className="wrapper-layout">
@@ -28,7 +30,7 @@ const TopSell = () => {
           <Button className="btn-menu">Chicken Meal </Button>
         </div>
         <div className="grid grid-cols-4 gap-y-5 gap-x-3">
-          <ProductItem items={productData} />
+          <ProductItem items={productSell} />
         </div>
       </div>
     </StyledSelling>

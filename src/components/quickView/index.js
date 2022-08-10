@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartList, setShowModal } from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
+import swal from "sweetalert";
 const StyledQuickView = styled.div`
   width: 100%;
   height: 100%;
@@ -54,9 +55,8 @@ const StyledQuickView = styled.div`
 `;
 const QuickView = ({ data = [] }) => {
   const dispatch = useDispatch();
-  const { showModal, productInfo } = useSelector((state) => state.global);
-  const { productImage = [], title, price } = productInfo;
-  console.log(productInfo);
+  let { showModal, productInfo } = useSelector((state) => state.global);
+  let { productImage = [], title, price, quantity } = productInfo;
   const [currentImg, setCurrentImg] = useState("");
   useEffect(() => {
     setCurrentImg(productImage[0]);
@@ -66,9 +66,15 @@ const QuickView = ({ data = [] }) => {
   };
   const handlePreviewProduct = (newProduct) => {
     setCurrentImg(newProduct);
-    dispatch(setCartList(newProduct));
   };
-
+  const handleAddProductPreview = () => {
+    dispatch(setCartList(productInfo));
+    swal("Sản phẩm thêm vào giỏ hàng thành công!", {
+      icon: "success",
+    });
+    dispatch(setShowModal(false));
+    console.log(productInfo);
+  };
   if (typeof document === "undefined")
     return <div className="modal-biography"></div>;
   return ReactDOM.createPortal(
@@ -135,14 +141,16 @@ const QuickView = ({ data = [] }) => {
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Quantity</h3>
-                <SetQuantity />
+                <SetQuantity quantity={quantity} />
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Subtotal:</h3>
                 <h2 className="text-sm font-semibold">$1,090.00</h2>
               </div>
               <div className="flex justify-start mt-4">
-                <Button className="font-bold">ADD TO CART</Button>
+                <Button onClick={handleAddProductPreview} className="font-bold">
+                  ADD TO CART
+                </Button>
               </div>
             </div>
           </div>

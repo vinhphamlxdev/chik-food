@@ -3,6 +3,8 @@ import SetQuantity from "components/setQuantity";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { removeCartItem } from "redux-toolkit/global/globalSlice";
+import swal from "sweetalert";
+
 const StyledCartItem = styled.div`
   border-bottom: 1px solid #e4e4e4;
   border-left: 1px solid #e4e4e4;
@@ -11,10 +13,21 @@ const StyledCartItem = styled.div`
 
 const CartItem = ({ item = {} }) => {
   const dispatch = useDispatch();
-  const { id, productImage, price, title, quantity } = item;
+  const { id, productImage = [], price, title, quantity } = item;
   const handleRemoveProduct = (productId) => {
-    dispatch(removeCartItem(productId));
-    console.log(productId);
+    swal({
+      title: "Are you sure?",
+      text: "Bạn có chắc muốn xóa sản phẩm này?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(removeCartItem(productId));
+      } else {
+        return;
+      }
+    });
   };
   return (
     <StyledCartItem className="flex cart-row">
@@ -31,13 +44,13 @@ const CartItem = ({ item = {} }) => {
       </div>
       <div className="grid w-full grid-cols-4 gap-x-3">
         <div className="text-lg font-semibold flex-center text-primary">
-          ${price.toLocaleString()}
+          ${price}
         </div>
         <div className="flex-center">
           <SetQuantity quantity={quantity} />
         </div>
         <div className="text-lg font-semibold flex-center text-primary">
-          ${(quantity * price).toLocaleString()}
+          ${quantity * price}
         </div>
         <div className="flex-center">
           <i

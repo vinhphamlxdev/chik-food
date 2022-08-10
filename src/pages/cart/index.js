@@ -3,9 +3,12 @@ import TitlePage from "components/titlePage";
 import Button from "components/button";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const { cartList } = useSelector((state) => state.global);
+  console.log("cart list", cartList);
   return (
     <>
       <TitlePage title="Your Shopping Cart" subTitle="Your Shopping Cart" />
@@ -52,7 +55,9 @@ const CartPage = () => {
                 Shipping, taxes, and discounts will be calculated at checkout.
               </p>
               <div className="flex gap-x-2">
-                <Button>Continue shopping</Button>
+                <Button onClick={() => navigate("/shop")}>
+                  Continue shopping
+                </Button>
                 <Button>Update Cart</Button>
                 <Button>Check Out</Button>
               </div>

@@ -1,6 +1,7 @@
-import Icon from "components/Icon";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import Icon from "components/Icon";
+import swal from "sweetalert";
+import { useDispatch } from "react-redux";
 import {
   setCartList,
   setProductInfo,
@@ -55,7 +56,6 @@ const StyledProducts = styled.div`
   }
 `;
 const ProductItem = ({ items = [] }) => {
-  // console.log("cart list", cartList);
   const dispatch = useDispatch();
   const handleShowModal = (productItem) => {
     dispatch(setShowModal(true));
@@ -63,6 +63,9 @@ const ProductItem = ({ items = [] }) => {
   };
   const handleAddProduct = (productItem) => {
     dispatch(setCartList(productItem));
+    swal("Sản phẩm thêm vào giỏ hàng thành công!", {
+      icon: "success",
+    });
   };
   return (
     <>
