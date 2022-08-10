@@ -39,8 +39,20 @@ const StyledHeader = styled.header`
   }
 `;
 const Header = () => {
-  const state = useSelector((state) => state.global);
-  const quantity = state.cartList;
+  const { cartList } = useSelector((state) => state.global);
+  const totalQuantity = () => {
+    // Dung for
+    // let total = 0;
+    // for (let index = 0; index < cartList.length; index++) {
+    //   let productItem = cartList[index];
+    //   total += productItem.quantity;
+    // }
+    // return total;
+    // Dung reduce
+    return cartList.reduce((total, productItem, index) => {
+      return (total += productItem.quantity);
+    }, 0);
+  };
   return (
     <StyledHeader>
       <div className="wrapper-layout">
@@ -68,7 +80,7 @@ const Header = () => {
             <Link to="/cart" className="py-6 relative px-[10px] text-inherit">
               <i className="bi leading-[0px] cursor-pointer text-lg text-inherit bi-cart-plus-fill"></i>
               <span className="absolute top-4 right-1 flex items-center justify-center w-4 leading-[0] h-4 text-sm font-light text-white rounded-full bg-primary">
-                {quantity.length}
+                {totalQuantity()}
               </span>
             </Link>
             <div className="py-6 px-[10px] text-inherit">

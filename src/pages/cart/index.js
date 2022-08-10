@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 const CartPage = () => {
   const navigate = useNavigate();
   const { cartList } = useSelector((state) => state.global);
-  console.log("cart list", cartList);
+  const totalCoin = cartList.reduce((total, product) => {
+    return total + product.price * product.quantity;
+  }, 0);
   return (
     <>
       <TitlePage title="Your Shopping Cart" subTitle="Your Shopping Cart" />
@@ -48,7 +50,7 @@ const CartPage = () => {
               <div className="flex items-center gap-x-2">
                 <h3 className="text-lg font-medium">Subtotal :</h3>
                 <span className="text-lg font-semibold text-primary">
-                  $437.00
+                  {totalCoin}
                 </span>
               </div>
               <p className="text-base italic">
@@ -58,7 +60,6 @@ const CartPage = () => {
                 <Button onClick={() => navigate("/shop")}>
                   Continue shopping
                 </Button>
-                <Button>Update Cart</Button>
                 <Button>Check Out</Button>
               </div>
             </div>

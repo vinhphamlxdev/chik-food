@@ -56,7 +56,7 @@ const StyledQuickView = styled.div`
 const QuickView = ({ data = [] }) => {
   const dispatch = useDispatch();
   let { showModal, productInfo } = useSelector((state) => state.global);
-  let { productImage = [], title, price, quantity } = productInfo;
+  let { id, productImage = [], title, price, quantity } = productInfo;
   const [currentImg, setCurrentImg] = useState("");
   useEffect(() => {
     setCurrentImg(productImage[0]);
@@ -73,7 +73,6 @@ const QuickView = ({ data = [] }) => {
       icon: "success",
     });
     dispatch(setShowModal(false));
-    console.log(productInfo);
   };
   if (typeof document === "undefined")
     return <div className="modal-biography"></div>;
@@ -141,7 +140,7 @@ const QuickView = ({ data = [] }) => {
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Quantity</h3>
-                <SetQuantity quantity={quantity} />
+                <SetQuantity quantity={quantity} productId={id} />
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Subtotal:</h3>

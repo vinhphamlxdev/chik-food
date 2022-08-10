@@ -29,6 +29,7 @@ const CartItem = ({ item = {} }) => {
       }
     });
   };
+
   return (
     <StyledCartItem className="flex cart-row">
       <div className="flex w-5/12 gap-x-1">
@@ -47,7 +48,7 @@ const CartItem = ({ item = {} }) => {
           ${price}
         </div>
         <div className="flex-center">
-          <SetQuantity quantity={quantity} />
+          <SetQuantity quantity={quantity} productId={id} />
         </div>
         <div className="text-lg font-semibold flex-center text-primary">
           ${quantity * price}
