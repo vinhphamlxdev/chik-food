@@ -1,3 +1,4 @@
+import Blog from "pages/blog";
 import CartPage from "pages/cart";
 import Collection from "pages/collection";
 import Home from "pages/home";
@@ -19,6 +20,10 @@ export const publicRoutes = [
   {
     path: "/cart",
     component: CartPage,
+  },
+  {
+    path: "/blog",
+    component: Blog,
   },
 ];
 export const privateRoutes = [];

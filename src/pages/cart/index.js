@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const CartPage = () => {
   const navigate = useNavigate();
   const { cartList } = useSelector((state) => state.global);
+  // console.log("cart list:", cartList);
   const totalCoin = cartList.reduce((total, product) => {
     return total + product.price * product.quantity;
   }, 0);

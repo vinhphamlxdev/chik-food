@@ -3,7 +3,6 @@ import TitlePage from "components/titlePage";
 import { CgMenuGridO } from "react-icons/cg";
 import ProductItem from "components/productItem";
 import { ProductsData } from "data";
-import QuickView from "components/quickView";
 
 const ShopPage = () => {
   return (
@@ -32,7 +31,6 @@ const ShopPage = () => {
           </div>
         </div>
       </div>
-      <QuickView />
     </>
   );
 };

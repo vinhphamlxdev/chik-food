@@ -9,7 +9,6 @@ export const globalSlice = createSlice({
     productInfo: {},
     cartList: [],
     increment: true,
-    productSell: [],
   },
   reducers: {
     setBgHeader: (state, action) => {
@@ -24,9 +23,7 @@ export const globalSlice = createSlice({
     setProductInfo: (state, action) => {
       state.productInfo = action.payload;
     },
-    setProductSell: (state, action) => {
-      state.productSell = action.payload;
-    },
+
     // Thêm sp vào giỏ hàng
     setCartList: (state, action) => {
       // chưa có thì push vào, đã có tăng số lượng
@@ -56,6 +53,7 @@ export const globalSlice = createSlice({
 
     IncQuantity: (state, action) => {
       let cartUpdate = [...state.cartList];
+      console.log("cart update:", cartUpdate);
       let index = cartUpdate.findIndex(
         (product) => product.id === action.payload
       );
@@ -66,6 +64,7 @@ export const globalSlice = createSlice({
     },
     DecQuantity: (state, action) => {
       let cartUpdate = [...state.cartList];
+      console.log(cartUpdate);
       let index = cartUpdate.findIndex(
         (product) => product.id === action.payload
       );
@@ -89,6 +88,5 @@ export const {
   removeCartItem,
   IncQuantity,
   DecQuantity,
-  setProductSell,
 } = globalSlice.actions;
 export default globalSlice.reducer;

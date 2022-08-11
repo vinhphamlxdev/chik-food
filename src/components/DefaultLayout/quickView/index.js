@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import Button from "components/button";
 import SetQuantity from "components/setQuantity";
-import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartList, setShowModal } from "redux-toolkit/global/globalSlice";
@@ -57,6 +57,7 @@ const QuickView = ({ data = [] }) => {
   const dispatch = useDispatch();
   let { showModal, productInfo } = useSelector((state) => state.global);
   let { id, productImage = [], title, price, quantity } = productInfo;
+  // console.log("product info", productInfo);
   const [currentImg, setCurrentImg] = useState("");
   useEffect(() => {
     setCurrentImg(productImage[0]);

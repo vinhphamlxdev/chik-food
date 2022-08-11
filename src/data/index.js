@@ -142,6 +142,7 @@ export const ProductsData = [
   },
   {
     id: 14,
+    quantity: 1,
     productImage: [product14, product14a],
     title: "Fried Spicy Chicken",
     price: 84900,

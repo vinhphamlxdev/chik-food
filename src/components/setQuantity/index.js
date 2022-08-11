@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { DecQuantity, IncQuantity } from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
 const StyledSetQuan = styled.div`
@@ -32,6 +32,7 @@ const StyledSetQuan = styled.div`
   }
 `;
 const SetQuantity = ({ quantity = 1, productId }) => {
+  console.log(productId);
   const dispatch = useDispatch();
   const handleDec = (id) => {
     dispatch(DecQuantity(id));

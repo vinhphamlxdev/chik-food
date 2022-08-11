@@ -1,6 +1,8 @@
 import React from "react";
+import BackTop from "./backTop";
 import Footer from "./footer";
 import Header from "./header";
+import QuickView from "./quickView";
 import Topbar from "./topbar";
 
 const DefaultLayout = ({ children }) => {
@@ -9,6 +11,8 @@ const DefaultLayout = ({ children }) => {
       <Topbar />
       <Header />
       <>{children}</>
+      <QuickView />
+      <BackTop />
       <Footer />
     </div>
   );

@@ -1,5 +1,4 @@
 import Arrivals from "components/Arrivals";
-import BackTop from "components/backTop";
 import Banner from "components/banner";
 import BannerMission from "components/banner-mission";
 import Collections from "components/collections";
@@ -24,7 +23,6 @@ const Home = () => {
         <BannerMission />
         <Arrivals />
       </div>
-      <BackTop />
     </Fragment>
   );
 };

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Button from "components/button";
 import ProductItem from "components/productItem";
 import { ProductsData } from "data";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 const StyledSelling = styled.div`
   & .btn-menu {
     background-color: #fff;
@@ -26,8 +26,6 @@ const StyledSelling = styled.div`
 
 const TopSell = () => {
   const [toggleTab, setToggleTab] = useState(1);
-  const { productSell } = useSelector((state) => state.global);
-  console.log("Prouduct sell:", productSell);
   const Royal = ProductsData.slice(0, 8);
   const Spicy = ProductsData.slice(8, 16);
   const Strips = ProductsData.slice(16, 24);
