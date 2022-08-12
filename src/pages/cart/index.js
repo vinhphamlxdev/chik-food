@@ -4,6 +4,7 @@ import Button from "components/button";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
 import { useNavigate } from "react-router-dom";
+import Container from "components/container";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const CartPage = () => {
     return total + product.price * product.quantity;
   }, 0);
   return (
-    <>
+    <Container>
       <TitlePage title="Your Shopping Cart" subTitle="Your Shopping Cart" />
       <div className="my-10 cart-container">
         <div className="wrapper-layout">
@@ -67,7 +68,7 @@ const CartPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </Container>
   );
 };
 

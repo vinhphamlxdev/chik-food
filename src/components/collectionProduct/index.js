@@ -3,6 +3,9 @@ import { productData } from "./data";
 import Button from "components/button";
 import styled from "styled-components";
 import TitlePage from "components/titlePage";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setBlogItem } from "redux-toolkit/global/globalSlice";
 const StyledDiv = styled.div`
   .title {
     color: ${(props) => props.theme.textTitle};
@@ -35,6 +38,8 @@ const StyledDiv = styled.div`
   }
 `;
 const CollectionProduct = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledDiv>
       <div className="wrapper-layout">
@@ -42,6 +47,7 @@ const CollectionProduct = () => {
         <div className="grid grid-cols-4 my-8 gap-x-5 gap-y-5">
           {productData.map((item) => (
             <div
+              onClick={() => navigate("/shop")}
               key={item.id}
               className="relative flex flex-col items-center product-item"
             >

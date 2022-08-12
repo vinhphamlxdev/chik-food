@@ -10,6 +10,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 const StyledCollection = styled.div`
   .collection-item {
     .collection-img img {
@@ -94,6 +95,7 @@ function PrevArrow(props) {
   );
 }
 const Collections = () => {
+  const navigate = useNavigate();
   let slickProperty = {
     dots: false,
     infinite: false,
@@ -178,7 +180,12 @@ const Collections = () => {
                         {subTitle}
                       </h3>
                       <div className="relative">
-                        <Button className="btn-main">Shop Now</Button>
+                        <Button
+                          onClick={() => navigate("/shop")}
+                          className="btn-main"
+                        >
+                          Shop Now
+                        </Button>
                       </div>
                     </div>
                   </div>

@@ -1,3 +1,4 @@
+import Container from "components/container";
 import React from "react";
 import BackTop from "./backTop";
 import Footer from "./footer";

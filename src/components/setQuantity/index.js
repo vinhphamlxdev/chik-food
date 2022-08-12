@@ -32,7 +32,6 @@ const StyledSetQuan = styled.div`
   }
 `;
 const SetQuantity = ({ quantity = 1, productId }) => {
-  console.log(productId);
   const dispatch = useDispatch();
   const handleDec = (id) => {
     dispatch(DecQuantity(id));

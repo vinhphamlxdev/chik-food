@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TitlePage from "components/titlePage";
 import { CgMenuGridO } from "react-icons/cg";
 import ProductItem from "components/productItem";
 import { ProductsData } from "data";
+import Container from "components/container";
 
 const ShopPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
-    <>
+    <Container>
       <TitlePage title="Products" subTitle="Products" />
       <div className=" wrapper-layout">
         <div className="flex my-8">
@@ -31,7 +35,7 @@ const ShopPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </Container>
   );
 };
 

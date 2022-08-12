@@ -1,10 +1,19 @@
+import React, { useState } from "react";
+
 import CollectionTitle from "components/collections/CollectionTitle";
-import React from "react";
+import { ProductsData } from "data";
 import styled from "styled-components";
-import { chickenMealData } from "./data";
 import Button from "components/button";
+import MenuItem from "./menuItem";
 const StyledMenu = styled.div`
   padding: 85px 0 68px;
+  & .menu-list {
+    transition: 0.5s all;
+    transform: translateY(100%);
+    &.active {
+      transform: translateY(0%);
+    }
+  }
   & .btn-menu {
     background-color: #fff;
     color: ${(props) => props.theme.textPrimary};
@@ -15,6 +24,10 @@ const StyledMenu = styled.div`
       color: #fff;
       border: 2px solid ${(props) => props.theme.primary};
       background: ${(props) => props.theme.primary};
+    }
+    &.active {
+      background-color: ${(props) => props.theme.primary};
+      color: #fff;
     }
   }
   & .product-item {
@@ -66,62 +79,68 @@ const StyledMenu = styled.div`
   }
 `;
 const Menu = () => {
+  const [toggleTab, setToggleTab] = useState(1);
+  const handleChangeTag = (index) => {
+    setToggleTab(index);
+  };
+
   return (
     <StyledMenu>
       <div className="wrapper-layout">
         <CollectionTitle isStar title="Our Special Menu" />
         <div className="flex justify-center gap-x-5">
-          <Button className="btn-menu">Chicken Meal </Button>
-          <Button className="btn-menu">Chicken Meal </Button>
-          <Button className="btn-menu">Chicken Meal </Button>
-          <Button className="btn-menu">Chicken Meal </Button>
+          <Button
+            onClick={() => handleChangeTag(1)}
+            className={`btn-menu ${toggleTab === 1 ? "active" : ""}`}
+          >
+            Chicken Meal
+          </Button>
+          <Button
+            onClick={() => handleChangeTag(2)}
+            className={`btn-menu ${toggleTab === 2 ? "active" : ""}`}
+          >
+            Crunchy
+          </Button>
+          <Button
+            onClick={() => handleChangeTag(3)}
+            className={`btn-menu ${toggleTab === 3 ? "active" : ""}`}
+          >
+            Grilled Chicken
+          </Button>
         </div>
-        <div className="grid grid-cols-2 gap-x-3 gap-y-5 ">
-          {chickenMealData.map((item) => {
-            const { id, image, addImg, price, title } = item;
-            return (
-              <div
-                key={id}
-                className="relative flex cursor-pointer product-item "
-              >
-                <div className="relative cursor-pointer product-container overflow-hidden w-[25%]">
-                  <div className="relative product-additional">
-                    <img className="object-cover w-full" src={addImg} alt="" />
-                  </div>
-                  <img className="object-cover w-full" src={image} alt="" />
-                </div>
-                <div className="h-full transition-all duration-500 product-detail-bg">
-                  <div className="flex justify-between w-full product-detail">
-                    <div className="flex flex-col gap-y-4">
-                      <h3 className="text-xl font-bold capitalize transition-5 caption-title">
-                        {title}
-                      </h3>
-                      <p className="font-light caption-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        ...
-                      </p>
-                    </div>
-                    <div className="absolute flex flex-col items-center justify-center product-price">
-                      <span className="text-base font-light price text-primary">
-                        {price}
-                      </span>
-                      <div className="flex py-1 gap-x-1">
-                        {Array(4)
-                          .fill(0)
-                          .map((item, index) => (
-                            <i
-                              key={index}
-                              className="text-sm bi bi-star-fill text-textPrimary"
-                            ></i>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {toggleTab === 1 && (
+          <div
+            className={`grid grid-cols-2 gap-x-3 gap-y-5 menu-list ${
+              toggleTab === 1 ? "active" : ""
+            }`}
+          >
+            {ProductsData.slice(8, 16).map((item) => {
+              return <MenuItem key={item.id} item={item} />;
+            })}
+          </div>
+        )}
+        {toggleTab === 2 && (
+          <div
+            className={`grid grid-cols-2 gap-x-3 gap-y-5 menu-list ${
+              toggleTab === 2 ? "active" : ""
+            }`}
+          >
+            {ProductsData.slice(0, 8).map((item) => {
+              return <MenuItem item={item} />;
+            })}
+          </div>
+        )}
+        {toggleTab === 3 && (
+          <div
+            className={`grid grid-cols-2 gap-x-3 gap-y-5 menu-list ${
+              toggleTab === 3 ? "active" : ""
+            }`}
+          >
+            {ProductsData.slice(16, 24).map((item) => {
+              return <MenuItem item={item} />;
+            })}
+          </div>
+        )}
       </div>
     </StyledMenu>
   );

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import logo from "assets/logo.webp";
 import { navbarData } from "./navBarData";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const StyledHeader = styled.header`
   width: 100%;
@@ -39,7 +39,8 @@ const StyledHeader = styled.header`
   }
 `;
 const Header = () => {
-  const { cartList } = useSelector((state) => state.global);
+  const { cartList, bgHeader } = useSelector((state) => state.global);
+  const navigate = useNavigate();
   const totalQuantity = () => {
     // Dung for
     // let total = 0;
@@ -54,10 +55,13 @@ const Header = () => {
     }, 0);
   };
   return (
-    <StyledHeader>
+    <StyledHeader className={`${bgHeader ? "isSticky" : ""}`}>
       <div className="wrapper-layout">
         <div className="relative flex items-center justify-between">
-          <div className="cursor-pointer logo-header">
+          <div
+            onClick={() => navigate("/")}
+            className="cursor-pointer logo-header"
+          >
             <img className="cursor-pointer" src={logo} alt="" />
           </div>
           <div className="header-navbar flex items-center px-[10px]">
@@ -65,8 +69,15 @@ const Header = () => {
               navbarData.map((link) => {
                 const { id, title, path } = link;
                 return (
-                  <NavLink to={path} key={id} className="navbar-item">
-                    <div className="text-sm font-medium cursor-pointer text-inherit navbar-link">
+                  <NavLink
+                    to={path}
+                    key={id}
+                    style={({ isActive }) =>
+                      isActive ? { color: "#d60508" } : {}
+                    }
+                    className="navbar-item"
+                  >
+                    <div className="relative text-sm font-medium cursor-pointer text-inherit navbar-link">
                       {title}
                     </div>
                   </NavLink>

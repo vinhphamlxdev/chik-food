@@ -5,6 +5,7 @@ import Button from "components/button";
 import img1 from "assets/banner/mission1.webp";
 import img2 from "assets/banner/mission2.webp";
 import img3 from "assets/banner/mission3.webp";
+import { useNavigate } from "react-router-dom";
 const StyledDiv = styled.div`
   background-image: url(${bannerMission});
   background-repeat: no-repeat;
@@ -12,6 +13,7 @@ const StyledDiv = styled.div`
   background-size: cover;
 `;
 const BannerMission = () => {
+  const navigate = useNavigate();
   return (
     <StyledDiv className="mt-16 p-11">
       <div className="grid grid-cols-2 gap-x-12">
@@ -28,7 +30,9 @@ const BannerMission = () => {
             CHICKEN & <b className="font-bold">GET 3 PIECES </b>FREE
           </div>
           <div className="relative">
-            <Button large>Shop Now</Button>
+            <Button onClick={() => navigate("/shop")} large>
+              Shop Now
+            </Button>
           </div>
         </div>
         <div className="relative grid items-center grid-cols-3 gap-x-5">

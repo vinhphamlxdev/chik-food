@@ -1,4 +1,5 @@
 import React from "react";
+import CountUp from "react-countup";
 import img from "assets/progress.jpg";
 import product1 from "assets/progress/img1.webp";
 import product2 from "assets/progress/img2.webp";
@@ -53,7 +54,12 @@ const ProgressBar = () => {
                 <img src={item.img} alt="" />
               </div>
               <div className="text-4xl font-semibold text-white">
-                {item.num}
+                <CountUp
+                  start={0}
+                  end={item.num}
+                  enableScrollSpy
+                  duration={3.75}
+                />
               </div>
               <span className="text-lg font-medium text-white">
                 {item.title}

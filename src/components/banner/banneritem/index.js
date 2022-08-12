@@ -1,5 +1,6 @@
 import Button from "components/button";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const StyledDiv = styled.div`
   & .banner-btn {
@@ -13,7 +14,7 @@ const StyledDiv = styled.div`
   }
 `;
 const BannerItem = ({
-  onclick = () => {},
+  onClick = () => {},
   className = "",
   children,
   img,
@@ -24,9 +25,10 @@ const BannerItem = ({
   order,
   ...props
 }) => {
+  const navigate = useNavigate();
   return (
     <StyledDiv
-      onclick={onclick}
+      onClick={() => navigate("/shop")}
       className={`relative flex overflow-hidden cursor-pointer banner-item ${className}`}
     >
       <img src={img} alt="" />
@@ -51,7 +53,9 @@ const BannerItem = ({
               Bulk Order’s Available
             </span>
             <div>
-              <Button className="banner-btn">Shop Now</Button>
+              <Button onClick={() => navigate("/shop")} className="banner-btn">
+                Shop Now
+              </Button>
             </div>
           </div>
         )}

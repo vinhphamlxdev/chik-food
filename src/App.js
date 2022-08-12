@@ -1,15 +1,13 @@
 import "./App.css";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./styles/GlobalStyles";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { lightTheme } from "themes/themesData";
-import Home from "pages/home";
-import Collection from "pages/collection";
-import ShopPage from "pages/shop";
-import BackTop from "components/backTop";
 import { publicRoutes } from "routes";
 import DefaultLayout from "components/DefaultLayout";
+import { useDispatch } from "react-redux";
+import { setBgHeader } from "redux-toolkit/global/globalSlice";
 
 function App() {
   return (

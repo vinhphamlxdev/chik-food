@@ -14,24 +14,4 @@ export const navbarData = [
     title: "Shop",
     path: "/shop",
   },
-  {
-    id: "4",
-    title: "Snack",
-    path: "/snack",
-  },
-  {
-    id: "5",
-    title: "Crispy",
-    path: "/crispy",
-  },
-  {
-    id: "6",
-    title: "Baked",
-    path: "/baked",
-  },
-  {
-    id: "7",
-    title: "Pages",
-    path: "/pages",
-  },
 ];

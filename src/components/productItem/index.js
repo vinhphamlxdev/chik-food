@@ -67,6 +67,13 @@ const ProductItem = ({ items = [] }) => {
       icon: "success",
     });
   };
+  const handleAddWishlist = () => {
+    swal({
+      text: "Chức năng chưa được cập nhật!",
+      icon: "warning",
+      dangerMode: true,
+    });
+  };
   return (
     <>
       {items.map((item, index) => {
@@ -80,7 +87,7 @@ const ProductItem = ({ items = [] }) => {
               <Icon onClick={() => handleShowModal(item)}>
                 <i className="text-sm  text-inherit leading-[0px]  bi bi-eye"></i>
               </Icon>
-              <Icon>
+              <Icon onClick={handleAddWishlist}>
                 <i className="text-sm  text-inherit leading-[0px]  bi bi-heart"></i>
               </Icon>
             </div>

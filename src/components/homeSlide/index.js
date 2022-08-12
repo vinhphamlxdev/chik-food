@@ -7,7 +7,19 @@ import { sliderData } from "./slideData";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Button from "components/button";
+import { useNavigate } from "react-router-dom";
 const StyledSlider = styled.div`
+  & .slider-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.4s ease-in-out;
+    outline: none;
+    background-color: ${(props) => props.theme.primary};
+    color: #fff;
+  }
   @keyframes fadeInDown {
     0% {
       opacity: 0;
@@ -36,7 +48,7 @@ const StyledSlider = styled.div`
       -webkit-animation: 1.2s ease-in-out 0s normal none 1 running fadeInDown;
       animation: 1.2s ease-in-out 0s normal none 1 running fadeInDown;
     }
-    & .shop-now-btn {
+    & .slider-btn {
       -webkit-animation: 1.6s ease-in-out 0s normal none 1 running fadeInDown;
       animation: 1.6s ease-in-out 0s normal none 1 running fadeInDown;
     }
@@ -65,6 +77,7 @@ function PrevArrow(props) {
   );
 }
 const HomeSlider = () => {
+  const navigate = useNavigate();
   let slickProperty = {
     dots: true,
     infinite: true,
@@ -108,7 +121,7 @@ const HomeSlider = () => {
     <StyledSlider className="relative w-full overflow-hidden home-slider">
       <Slider {...slickProperty}>
         {sliderData.map((slide) => {
-          const { id, img, title, subTitle, btn } = slide;
+          const { id, img, title, subTitle } = slide;
           return (
             <div
               key={id}
@@ -130,11 +143,12 @@ const HomeSlider = () => {
                   <h3 className="mb-5 select-none text-4xl font-semibold text-[#fcb917] slide-subheading">
                     {subTitle}
                   </h3>
-                  <div className="slide-btn">
-                    <button className="text-base z-20 animated-btn hover:text-white shop-now-btn font-light bg-white slider-button  text-textColor py-[10px] px-[24px] rounded-full transition-all duration-300">
-                      Shop Now
-                    </button>
-                  </div>
+                  <Button
+                    onClick={() => navigate("/shop")}
+                    className="slider-btn hover:bg-primary"
+                  >
+                    Shop Now
+                  </Button>
                 </div>
               </div>
             </div>

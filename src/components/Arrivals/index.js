@@ -4,6 +4,9 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import Button from "components/button";
 import { arrivalData } from "./data";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setBlogItem } from "redux-toolkit/global/globalSlice";
 const StyledDiv = styled.div`
   .arrivals-item {
     display: flex !important;
@@ -31,6 +34,13 @@ const StyledDiv = styled.div`
   }
 `;
 const Arrivals = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleRedirect = (blogItem) => {
+    console.log(blogItem);
+    dispatch(setBlogItem(blogItem));
+    navigate("/blog");
+  };
   let slickProperty = {
     dots: true,
     infinite: true,
@@ -123,7 +133,12 @@ const Arrivals = () => {
                       </p>
                     </div>
                     <div className="mt-auto text-left">
-                      <Button className="arrivals-btn">Read More</Button>
+                      <Button
+                        onClick={() => handleRedirect(item)}
+                        className="arrivals-btn"
+                      >
+                        Read More
+                      </Button>
                     </div>
                   </div>
                 </div>
