@@ -1,4 +1,4 @@
-import { IconEyeClose, IconEyeOpen } from "components/icon";
+import { IconEyeClose, IconEyeOpen } from "components/iconpassword";
 import React, { Fragment, useState } from "react";
 import Input from "./Input";
 

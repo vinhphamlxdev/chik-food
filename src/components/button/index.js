@@ -20,9 +20,16 @@ const StyledButton = styled.button`
       `};
   }
 `;
-const Button = ({ className, large = false, children, onClick = () => {} }) => {
+const Button = ({
+  className,
+  large = false,
+  children,
+  onClick = () => {},
+  type = "button",
+}) => {
   return (
     <StyledButton
+      type={type}
       large={large}
       onClick={onClick}
       className={`whitespace-nowrap hover:bg-primary text-white font-light rounded-full text-base ${className}`}
