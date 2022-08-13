@@ -11,11 +11,14 @@ const InputStyles = styled.div`
     padding: ${(props) =>
       props.hasIcon ? "16px 60px 16px 20px" : "16px 20px"};
     background-color: transparent;
-    border: 1px solid ${(props) => props.theme.borderCol};
-    border-radius: 8px;
+    border: 1px solid ${(props) => props.theme.borderColor};
+    border-radius: 4px;
     transition: all 0.2s linear;
     color: ${(props) => props.theme.textPrimary};
     font-size: 14px;
+  }
+  input:focus {
+    border: 1px solid ${(props) => props.theme.primary};
   }
   input::-webkit-input-placeholder {
     color: #b2b3bd;
@@ -31,13 +34,7 @@ const InputStyles = styled.div`
     cursor: pointer;
   }
 `;
-/**
- *
- * @param {*} placeholder(optional) - Placeholder of input
- * @param {*} name(optional) - name of input
- * @param {*} control - control from react hook form
- * @returns Input
- */
+
 const Input = ({ name = "", type = "text", children, control, ...props }) => {
   const { field } = useController({
     control,
@@ -52,7 +49,6 @@ const Input = ({ name = "", type = "text", children, control, ...props }) => {
   );
 };
 Input.propTypes = {
-  // value: PropTypes.string
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   children: PropTypes.any,
