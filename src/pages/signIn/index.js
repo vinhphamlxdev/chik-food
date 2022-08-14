@@ -7,7 +7,11 @@ import { Input } from "components/input";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { db, auth } from "firebase-app/firebase-config";
 import InputPasswordToggle from "components/input/InputPasswordToggle";
 import Button from "components/button";
@@ -15,10 +19,10 @@ import { toast } from "react-toastify";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { addDoc, collection } from "firebase/firestore";
-import { LoadingSpinner } from "components/loading";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "redux-toolkit/global/globalSlice";
 
 const schema = yup.object({
-  fullname: yup.string().required("Please enter your fullname"),
   email: yup
     .string()
     .email("Please enter valid email address")
@@ -29,8 +33,19 @@ const schema = yup.object({
     .required("Please enter your password"),
 });
 
-const SignUp = () => {
+const SignIn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.global);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      dispatch(setUserInfo(user));
+      if (!userInfo) navigate("/sign-up");
+      else navigate("/");
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo]);
   const {
     control,
     handleSubmit,
@@ -39,28 +54,10 @@ const SignUp = () => {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  const handleSignUp = async (values) => {
-    console.log(errors);
+  const handleSignIn = async (values) => {
     if (!isValid) return;
-    console.log(values);
-    const user = await createUserWithEmailAndPassword(
-      auth,
-      values.email,
-      values.password
-    );
-    await updateProfile(auth.currentUser, {
-      displayName: values.fullname,
-    });
-    const colRef = collection(db, "users");
-    await addDoc(colRef, {
-      fullname: values.fullname,
-      email: values.email,
-      password: values.password,
-    });
-    await swal("Create user successfully!!", {
-      icon: "success",
-    });
-    navigate("/sign-in");
+    await signInWithEmailAndPassword(auth, values.email, values.password);
+    navigate("/");
   };
   useEffect(() => {
     const arrErrores = Object.values(errors);
@@ -69,8 +66,9 @@ const SignUp = () => {
     }
   }, [errors]);
   useEffect(() => {
-    document.title = "Register Page";
-  }, []);
+    if (userInfo?.email) navigate("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo]);
   return (
     <Container>
       <TitlePage title="Create Account" subTitle="Create Account" />
@@ -78,18 +76,9 @@ const SignUp = () => {
         <div className="flex justify-center w-full">
           <form
             className="form w-[350px] "
-            onSubmit={handleSubmit(handleSignUp)}
+            onSubmit={handleSubmit(handleSignIn)}
             autoComplete="off"
           >
-            <Field>
-              <Label htmlFor="fullname">Fullname</Label>
-              <Input
-                type="text"
-                name="fullname"
-                placeholder="Enter your fullname"
-                control={control}
-              />
-            </Field>
             <Field>
               <Label htmlFor="email">Email address</Label>
               <Input
@@ -110,7 +99,7 @@ const SignUp = () => {
               type="submit"
               className="w-full py-[10px]"
             >
-              Sign Up
+              Sign In
             </Button>
           </form>
         </div>
@@ -119,4 +108,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

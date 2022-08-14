@@ -54,6 +54,11 @@ export const GlobalClasses = css`
     justify-content: center;
     align-items: center;
   }
+  //toast
+  .Toastify__toast-body {
+    font-size: 16px;
+    color: ${(props) => props.theme.textPrimary};
+  }
   //slick slider home banner
   .next-btn {
     position: absolute;

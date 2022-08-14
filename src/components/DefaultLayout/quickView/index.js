@@ -3,7 +3,11 @@ import Button from "components/button";
 import SetQuantity from "components/setQuantity";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartList, setShowModal } from "redux-toolkit/global/globalSlice";
+import {
+  setCartList,
+  setProductInfo,
+  setShowModal,
+} from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
 import swal from "sweetalert";
 const StyledQuickView = styled.div`
@@ -64,6 +68,7 @@ const QuickView = ({ data = [] }) => {
   }, [productImage]);
   const handleCloseModal = () => {
     dispatch(setShowModal(false));
+    dispatch(setProductInfo({}));
   };
   const handlePreviewProduct = (newProduct) => {
     setCurrentImg(newProduct);

@@ -126,7 +126,7 @@ const Menu = () => {
             }`}
           >
             {ProductsData.slice(0, 8).map((item) => {
-              return <MenuItem item={item} />;
+              return <MenuItem key={item.id} item={item} />;
             })}
           </div>
         )}
@@ -137,7 +137,7 @@ const Menu = () => {
             }`}
           >
             {ProductsData.slice(16, 24).map((item) => {
-              return <MenuItem item={item} />;
+              return <MenuItem key={item.id} item={item} />;
             })}
           </div>
         )}

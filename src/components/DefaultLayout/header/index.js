@@ -4,6 +4,7 @@ import logo from "assets/logo.webp";
 import { navbarData } from "./navBarData";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { BiLogIn } from "react-icons/bi";
 const StyledHeader = styled.header`
   width: 100%;
   z-index: 99;
@@ -37,9 +38,25 @@ const StyledHeader = styled.header`
       color: ${(props) => props.theme.primary};
     }
   }
+  .user-icon {
+    &:hover .user-list {
+      visibility: visible;
+      opacity: 1;
+    }
+    .user-list::after {
+      content: "";
+      height: 20px;
+      position: absolute;
+      width: 100%;
+      z-index: 100;
+      top: -16px !important;
+      background-color: transparent;
+      left: 0;
+    }
+  }
 `;
 const Header = () => {
-  const { cartList, bgHeader } = useSelector((state) => state.global);
+  const { cartList, bgHeader, userInfo } = useSelector((state) => state.global);
   const navigate = useNavigate();
   const totalQuantity = () => {
     // Dung for
@@ -94,8 +111,28 @@ const Header = () => {
                 {totalQuantity()}
               </span>
             </Link>
-            <div className="py-6 px-[10px] text-inherit">
+            <div className="py-6 relative user-icon px-[10px] gap-x-2 text-inherit">
               <i className="bi text-lg text-inherit leading-[0px] cursor-pointer bi-person-fill"></i>
+              <div className="absolute user-list opacity-0 invisible items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-3/4 gap-y-4">
+                <div
+                  onClick={() => navigate("/sign-in")}
+                  className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"
+                >
+                  <BiLogIn className="text-xl text-left mr-1 hover:text-primary leading-[0] cursor-pointer text-inherit" />
+                  Log in
+                </div>
+                <div
+                  onClick={() => navigate("/sign-up")}
+                  className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"
+                >
+                  <i className="text-xl leading-[0] cursor-pointer bi bi-person-fill text-inherit"></i>
+                  Create Account
+                </div>
+                <div className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2">
+                  <i className="text-base leading-[0] cursor-pointer bi bi-heart text-inherit"></i>
+                  Wishlist
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@ export const globalSlice = createSlice({
     cartList: [],
     increment: true,
     blogItem: {},
+    userInfo: null,
   },
   reducers: {
     setBgHeader: (state, action) => {
@@ -36,6 +37,7 @@ export const globalSlice = createSlice({
       } else {
         // state.cartList.push(action.payload);
         state.cartList = [...state.cartList, action.payload];
+        localStorage.setItem("cartItems", JSON.stringify(state.cartList));
       }
     },
     // xáo sp khỏi giỏ hàng
@@ -81,6 +83,10 @@ export const globalSlice = createSlice({
     setBlogItem: (state, action) => {
       state.blogItem = action.payload;
     },
+    //user
+    setUserInfo: (state, action) => {
+      state.userInfo = action.payload;
+    },
   },
 });
 export const {
@@ -93,5 +99,6 @@ export const {
   IncQuantity,
   DecQuantity,
   setBlogItem,
+  setUserInfo,
 } = globalSlice.actions;
 export default globalSlice.reducer;

@@ -154,7 +154,9 @@ const Collections = () => {
                 <h4 className="mb-5 text-2xl font-semibold cursor-pointer title">
                   {item.title}
                 </h4>
-                <Button>Read More</Button>
+                <div className="flex justify-center">
+                  <Button>Read More</Button>
+                </div>
               </div>
             </div>
           ))}

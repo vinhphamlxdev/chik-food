@@ -16,6 +16,7 @@ body {
   font-size: 18px;
   font-family: "Josefin Sans", sans-serif;
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 img,
 picture,

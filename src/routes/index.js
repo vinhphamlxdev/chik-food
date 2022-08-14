@@ -3,6 +3,7 @@ import CartPage from "pages/cart";
 import Collection from "pages/collection";
 import Home from "pages/home";
 import ShopPage from "pages/shop";
+import SignIn from "pages/signIn";
 import SignUp from "pages/signUp";
 
 export const publicRoutes = [
@@ -29,6 +30,10 @@ export const publicRoutes = [
   {
     path: "/sign-up",
     component: SignUp,
+  },
+  {
+    path: "/sign-in",
+    component: SignIn,
   },
 ];
 export const privateRoutes = [];
