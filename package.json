@@ -25,6 +25,7 @@
     "slick-slider": "^1.8.2",
     "styled-components": "^5.3.5",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.4.26",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

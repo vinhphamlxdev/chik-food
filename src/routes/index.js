@@ -1,5 +1,6 @@
 import Blog from "pages/blog";
 import CartPage from "pages/cart";
+import Checkout from "pages/checkout";
 import Collection from "pages/collection";
 import Home from "pages/home";
 import ShopPage from "pages/shop";
@@ -34,6 +35,10 @@ export const publicRoutes = [
   {
     path: "/sign-in",
     component: SignIn,
+  },
+  {
+    path: "/checkout",
+    component: Checkout,
   },
 ];
 export const privateRoutes = [];

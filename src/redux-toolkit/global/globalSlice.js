@@ -10,7 +10,6 @@ export const globalSlice = createSlice({
     cartList: [],
     increment: true,
     blogItem: {},
-    userInfo: null,
   },
   reducers: {
     setBgHeader: (state, action) => {
@@ -83,10 +82,6 @@ export const globalSlice = createSlice({
     setBlogItem: (state, action) => {
       state.blogItem = action.payload;
     },
-    //user
-    setUserInfo: (state, action) => {
-      state.userInfo = action.payload;
-    },
   },
 });
 export const {
@@ -99,6 +94,5 @@ export const {
   IncQuantity,
   DecQuantity,
   setBlogItem,
-  setUserInfo,
 } = globalSlice.actions;
 export default globalSlice.reducer;

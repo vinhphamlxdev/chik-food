@@ -3,8 +3,13 @@ import styled from "styled-components";
 import logo from "assets/logo.webp";
 import { navbarData } from "./navBarData";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BiLogIn } from "react-icons/bi";
+import { signOut } from "firebase/auth";
+import { auth } from "firebase-app/firebase-config";
+import swal from "sweetalert";
+import { useAuth } from "contexts/auth-context";
+import Swal from "sweetalert2";
 const StyledHeader = styled.header`
   width: 100%;
   z-index: 99;
@@ -56,8 +61,11 @@ const StyledHeader = styled.header`
   }
 `;
 const Header = () => {
-  const { cartList, bgHeader, userInfo } = useSelector((state) => state.global);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { cartList, bgHeader } = useSelector((state) => state.global);
+  const { userInfo, setUserInfo } = useAuth();
+  console.log(userInfo);
   const totalQuantity = () => {
     // Dung for
     // let total = 0;
@@ -70,6 +78,29 @@ const Header = () => {
     return cartList.reduce((total, productItem, index) => {
       return (total += productItem.quantity);
     }, 0);
+  };
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        setUserInfo(undefined);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          text: "Log out successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: `Something went wrong:${error}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
   return (
     <StyledHeader className={`${bgHeader ? "isSticky" : ""}`}>
@@ -113,26 +144,53 @@ const Header = () => {
             </Link>
             <div className="py-6 relative user-icon px-[10px] gap-x-2 text-inherit">
               <i className="bi text-lg text-inherit leading-[0px] cursor-pointer bi-person-fill"></i>
-              <div className="absolute user-list opacity-0 invisible items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-3/4 gap-y-4">
-                <div
-                  onClick={() => navigate("/sign-in")}
-                  className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"
-                >
-                  <BiLogIn className="text-xl text-left mr-1 hover:text-primary leading-[0] cursor-pointer text-inherit" />
-                  Log in
+
+              {userInfo ? (
+                <div className="absolute user-list  items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-3/4 gap-y-4">
+                  <div className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2">
+                    <div className="relative overflow-hidden rounded-full w-7 h-7 whitespace-nowrap">
+                      <img
+                        className="w-full rounded-full"
+                        src={userInfo.avatar}
+                        alt=""
+                      />
+                    </div>
+                    {userInfo.displayName}
+                  </div>
+                  <div
+                    onClick={handleLogout}
+                    className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"
+                  >
+                    <BiLogIn className="text-xl text-left mr-1 hover:text-primary leading-[0] cursor-pointer text-inherit" />
+                    Log Out
+                  </div>
+                  <div className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2">
+                    <i className="text-base leading-[0] cursor-pointer bi bi-heart text-inherit"></i>
+                    Wishlist
+                  </div>
                 </div>
-                <div
-                  onClick={() => navigate("/sign-up")}
-                  className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"
-                >
-                  <i className="text-xl leading-[0] cursor-pointer bi bi-person-fill text-inherit"></i>
-                  Create Account
+              ) : (
+                <div className="absolute user-list opacity-0 invisible items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-3/4 gap-y-4">
+                  <div
+                    onClick={() => navigate("/sign-in")}
+                    className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"
+                  >
+                    <BiLogIn className="text-xl text-left mr-1 hover:text-primary leading-[0] cursor-pointer text-inherit" />
+                    Log in
+                  </div>
+                  <div
+                    onClick={() => navigate("/sign-up")}
+                    className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"
+                  >
+                    <i className="text-xl leading-[0] cursor-pointer bi bi-person-fill text-inherit"></i>
+                    Create Account
+                  </div>
+                  <div className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2">
+                    <i className="text-base leading-[0] cursor-pointer bi bi-heart text-inherit"></i>
+                    Wishlist
+                  </div>
                 </div>
-                <div className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2">
-                  <i className="text-base leading-[0] cursor-pointer bi bi-heart text-inherit"></i>
-                  Wishlist
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

@@ -17,10 +17,9 @@ import InputPasswordToggle from "components/input/InputPasswordToggle";
 import Button from "components/button";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
-import { useNavigate } from "react-router-dom";
-import { addDoc, collection } from "firebase/firestore";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserInfo } from "redux-toolkit/global/globalSlice";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "contexts/auth-context";
+import Swal from "sweetalert2";
 
 const schema = yup.object({
   email: yup
@@ -34,44 +33,53 @@ const schema = yup.object({
 });
 
 const SignIn = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.global);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user);
-      dispatch(setUserInfo(user));
-      if (!userInfo) navigate("/sign-up");
-      else navigate("/");
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
   const {
-    control,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
+    control,
+    formState: { isValid, isSubmitting, errors },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  const handleSignIn = async (values) => {
-    if (!isValid) return;
-    await signInWithEmailAndPassword(auth, values.email, values.password);
-    navigate("/");
-  };
   useEffect(() => {
-    const arrErrores = Object.values(errors);
-    if (arrErrores.length > 0) {
-      toast.error(arrErrores[0]?.message);
+    const arrErroes = Object.values(errors);
+    if (arrErroes.length > 0) {
+      toast.error(arrErroes[0]?.message, {
+        pauseOnHover: false,
+        delay: 0,
+      });
     }
   }, [errors]);
+  const { userInfo } = useAuth();
+  console.log(userInfo);
+  const navigate = useNavigate();
   useEffect(() => {
+    document.title = "Login Page";
     if (userInfo?.email) navigate("/");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
+  const handleSignIn = async (values) => {
+    if (!isValid) return;
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      Swal.fire({
+        icon: "success",
+        text: "Log in Successfully",
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      if (error.message.includes("wrong-password"))
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "It seems your password was wrong!",
+        });
+    }
+  };
   return (
     <Container>
-      <TitlePage title="Create Account" subTitle="Create Account" />
+      <TitlePage title="Account" subTitle="Account" />
       <div className="my-10 wrapper-layout">
         <div className="flex justify-center w-full">
           <form
@@ -101,6 +109,14 @@ const SignIn = () => {
             >
               Sign In
             </Button>
+            <div className="mt-5 text-center create-account hover:text-primary">
+              <NavLink
+                className="text-base font-light underline hover:text-primary text-textColor"
+                to="/sign-up"
+              >
+                Create account
+              </NavLink>
+            </div>
           </form>
         </div>
       </div>

@@ -8,28 +8,31 @@ import { publicRoutes } from "routes";
 import DefaultLayout from "components/DefaultLayout";
 import { useDispatch } from "react-redux";
 import { setBgHeader } from "redux-toolkit/global/globalSlice";
+import { AuthProvider } from "contexts/auth-context";
 
 function App() {
   return (
     <Fragment>
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles></GlobalStyles>
-        <Routes>
-          {publicRoutes.map((route, index) => {
-            const Page = route.component;
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <DefaultLayout>
-                    <Page />
-                  </DefaultLayout>
-                }
-              ></Route>
-            );
-          })}
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            {publicRoutes.map((route, index) => {
+              const Page = route.component;
+              return (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    <DefaultLayout>
+                      <Page />
+                    </DefaultLayout>
+                  }
+                ></Route>
+              );
+            })}
+          </Routes>
+        </AuthProvider>
       </ThemeProvider>
     </Fragment>
   );

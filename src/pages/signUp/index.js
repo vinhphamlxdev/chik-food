@@ -12,10 +12,10 @@ import { db, auth } from "firebase-app/firebase-config";
 import InputPasswordToggle from "components/input/InputPasswordToggle";
 import Button from "components/button";
 import { toast } from "react-toastify";
-import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { LoadingSpinner } from "components/loading";
+import Swal from "sweetalert2";
 
 const schema = yup.object({
   fullname: yup.string().required("Please enter your fullname"),
@@ -31,6 +31,7 @@ const schema = yup.object({
 
 const SignUp = () => {
   const navigate = useNavigate();
+
   const {
     control,
     handleSubmit,
@@ -40,32 +41,38 @@ const SignUp = () => {
     resolver: yupResolver(schema),
   });
   const handleSignUp = async (values) => {
-    console.log(errors);
     if (!isValid) return;
-    console.log(values);
-    const user = await createUserWithEmailAndPassword(
-      auth,
-      values.email,
-      values.password
-    );
+    await createUserWithEmailAndPassword(auth, values.email, values.password);
     await updateProfile(auth.currentUser, {
       displayName: values.fullname,
+      photoURL:
+        "https://tse4.mm.bing.net/th?id=OIP.KA_Smqj-RFt3q8YLTa2BaQHaHa&pid=Api&P=0",
     });
-    const colRef = collection(db, "users");
-    await addDoc(colRef, {
+
+    await setDoc(doc(db, "users", auth.currentUser.uid), {
       fullname: values.fullname,
       email: values.email,
       password: values.password,
+      avatar:
+        "https://tse4.mm.bing.net/th?id=OIP.KA_Smqj-RFt3q8YLTa2BaQHaHa&pid=Api&P=0",
     });
-    await swal("Create user successfully!!", {
+
+    Swal.fire({
+      position: "center",
       icon: "success",
+      text: "Create user successfully",
+      showConfirmButton: false,
+      timer: 1500,
     });
-    navigate("/sign-in");
+    navigate("/");
   };
   useEffect(() => {
-    const arrErrores = Object.values(errors);
-    if (arrErrores.length > 0) {
-      toast.error(arrErrores[0]?.message);
+    const arrErroes = Object.values(errors);
+    if (arrErroes.length > 0) {
+      toast.error(arrErroes[0]?.message, {
+        pauseOnHover: false,
+        delay: 0,
+      });
     }
   }, [errors]);
   useEffect(() => {
