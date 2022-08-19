@@ -12,11 +12,10 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { db, auth } from "firebase-app/firebase-config";
+import { auth } from "firebase-app/firebase-config";
 import InputPasswordToggle from "components/input/InputPasswordToggle";
 import Button from "components/button";
 import { toast } from "react-toastify";
-import swal from "sweetalert";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "contexts/auth-context";
 import Swal from "sweetalert2";
@@ -69,7 +68,10 @@ const SignIn = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      if (error.message.includes("wrong-password"))
+      if (
+        error.message.includes("wrong-password") ||
+        error.message.includes("user-not-found")
+      )
         Swal.fire({
           icon: "error",
           title: "Oops...",

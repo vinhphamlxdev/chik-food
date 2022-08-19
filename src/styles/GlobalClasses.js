@@ -78,6 +78,23 @@ export const GlobalClasses = css`
       font-size: 50px;
     }
   }
+  .has-scroll {
+    background-color: ${(props) => props.theme.bgModal};
+    will-change: scroll-position;
+    scroll-behavior: smooth;
+    overflow: hidden overlay;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &:hover::-webkit-scrollbar {
+      width: 6px;
+      display: inline-block;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 12px;
+      background: #ccc;
+    }
+  }
   .prev-btn {
     position: absolute;
     top: 50%;
