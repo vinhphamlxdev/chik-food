@@ -78,16 +78,19 @@ export const GlobalClasses = css`
       font-size: 50px;
     }
   }
-  .has-scroll {
+  .has-scrollbar {
     background-color: ${(props) => props.theme.bgModal};
+    background-color: transparent;
     will-change: scroll-position;
     scroll-behavior: smooth;
     overflow: hidden overlay;
     &::-webkit-scrollbar {
+      display: none;
       width: 6px;
     }
     &:hover::-webkit-scrollbar {
       width: 6px;
+      display: block;
       display: inline-block;
     }
     &::-webkit-scrollbar-thumb {

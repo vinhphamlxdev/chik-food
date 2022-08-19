@@ -9,7 +9,7 @@ import Container from "components/container";
 const CartPage = () => {
   const navigate = useNavigate();
   const { cartList } = useSelector((state) => state.global);
-  // console.log("cart list:", cartList);
+
   const totalCoin = cartList.reduce((total, product) => {
     return total + product.price * product.quantity;
   }, 0);
@@ -62,7 +62,7 @@ const CartPage = () => {
                 <Button onClick={() => navigate("/shop")}>
                   Continue shopping
                 </Button>
-                <Button>Check Out</Button>
+                <Button onClick={() => navigate("/checkout")}>Check Out</Button>
               </div>
             </div>
           </div>

@@ -102,6 +102,10 @@ const Header = () => {
         });
       });
   };
+  const handleRedirectCartPage = () => {
+    if (totalQuantity === 0) return;
+    else navigate("/cart");
+  };
   return (
     <StyledHeader className={`${bgHeader ? "isSticky" : ""}`}>
       <div className="wrapper-layout">
@@ -136,12 +140,15 @@ const Header = () => {
             <div className="py-6 px-[10px] text-inherit">
               <i className="text-lg cursor-pointer bi text-inherit bi-search"></i>
             </div>
-            <Link to="/cart" className="py-6 relative px-[10px] text-inherit">
+            <div
+              onClick={handleRedirectCartPage}
+              className="py-6 relative px-[10px] text-inherit"
+            >
               <i className="bi leading-[0px] cursor-pointer text-lg text-inherit bi-cart-plus-fill"></i>
               <span className="absolute top-4 right-1 flex items-center justify-center w-4 leading-[0] h-4 text-sm font-light text-white rounded-full bg-primary">
                 {totalQuantity()}
               </span>
-            </Link>
+            </div>
             <div className="py-6 relative user-icon px-[10px] gap-x-2 text-inherit">
               <i className="bi text-lg text-inherit leading-[0px] cursor-pointer bi-person-fill"></i>
 
