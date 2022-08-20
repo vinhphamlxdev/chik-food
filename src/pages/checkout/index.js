@@ -1,17 +1,17 @@
 import React from "react";
 import TitlePage from "components/titlePage";
 import { Field } from "components/field";
-import { Label } from "components/label";
 import { Input } from "components/input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Checkbox } from "components/checkbox";
 import Button from "components/button";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Container from "components/container";
+import { cartItemsTotalSelector } from "redux-toolkit/cart/selectors";
 const schema = yup.object({
   fullname: yup.string().required("Please enter your fullname"),
   email: yup
@@ -23,7 +23,9 @@ const schema = yup.object({
 });
 const Checkout = () => {
   const navigate = useNavigate();
-  const { cartList } = useSelector((state) => state.global);
+  const { cartItems } = useSelector((state) => state.cart);
+  const cartItemsTotal = useSelector(cartItemsTotalSelector);
+
   const priceShipping = 2000;
   const {
     control,
@@ -33,11 +35,10 @@ const Checkout = () => {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  const totalCoin = cartList.reduce((total, product) => {
-    return total + product.price * product.quantity;
-  }, 0);
+
   const handleCheckout = async (values) => {
     if (!isValid) return;
+    else navigate("/checkout-success");
   };
   useEffect(() => {
     const arrErroes = Object.values(errors);
@@ -49,7 +50,7 @@ const Checkout = () => {
     }
   }, [errors]);
   return (
-    <div>
+    <Container>
       <TitlePage title="Checkout" subTitle="Checkout" />
       <div className="wrapper-layout">
         <form
@@ -97,8 +98,8 @@ const Checkout = () => {
           </div>
           <div className="flex bg-[#fafafa] py-5 pl-5 pr-3 flex-col">
             <div className="checkout-list py-3 pr-3  flex flex-col gap-y-4 h-[350px] has-scrollbar">
-              {cartList.map((item) => {
-                const { id, title, productImage, price, quantity } = item;
+              {cartItems.map((item) => {
+                const { id, title, img, salePrice, quantity } = item;
                 return (
                   <div
                     key={id}
@@ -108,7 +109,7 @@ const Checkout = () => {
                       <div className="relative overflow-hidden bg-white border border-gray-300 rounded-md w-14 h-14">
                         <img
                           className="object-cover w-full rounded-md"
-                          src={productImage[0]}
+                          src={img[0]}
                           alt=""
                         />
                       </div>
@@ -126,7 +127,7 @@ const Checkout = () => {
                         </p>
                       </div>
                       <span className="text-sm font-light text-textPrimary">
-                        ${price * quantity}
+                        ${salePrice * quantity}
                       </span>
                     </div>
                   </div>
@@ -139,7 +140,7 @@ const Checkout = () => {
                   Subtotal
                 </span>
                 <p className="text-sm font-normal text-textPrimary">
-                  ${totalCoin}
+                  ${cartItemsTotal}
                 </p>
               </div>
               <div className="flex justify-between">
@@ -154,7 +155,7 @@ const Checkout = () => {
             <div className="flex justify-between mt-5 ">
               <span className="text-sm font-light text-textColor">Total</span>
               <p className="text-lg font-normal text-textPrimary">
-                ${(totalCoin + priceShipping).toLocaleString()}
+                ${(cartItemsTotal + priceShipping).toLocaleString()}
               </p>
             </div>
             <div className="flex justify-end mt-5 text-right">
@@ -170,7 +171,7 @@ const Checkout = () => {
           </div>
         </form>
       </div>
-    </div>
+    </Container>
   );
 };
 

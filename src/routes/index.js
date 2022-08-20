@@ -42,7 +42,7 @@ export const publicRoutes = [
     component: Checkout,
   },
   {
-    path: "/checkout/:id",
+    path: "/checkout-success",
     component: CheckoutSuccess,
   },
 ];

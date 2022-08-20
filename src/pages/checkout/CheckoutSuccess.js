@@ -1,30 +1,17 @@
 import React from "react";
 import TitlePage from "components/titlePage";
-import { Field } from "components/field";
-import { Label } from "components/label";
-import { Input } from "components/input";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Checkbox } from "components/checkbox";
-import Button from "components/button";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-
+import Container from "components/container";
 const CheckoutSuccess = () => {
-  const { cartList } = useSelector((state) => state.global);
-  const priceShipping = 2000;
-
-  const totalCoin = cartList.reduce((total, product) => {
-    return total + product.price * product.quantity;
-  }, 0);
-
   return (
-    <div>
+    <Container>
       <TitlePage title="Checkout" subTitle="Checkout" />
       <div className="wrapper-layout">
-        <div className="grid grid-cols-2 my-10 gap-x-3">
+        <div className="flex justify-center my-10">
+          <h3 className="mb-10 text-xl font-medium">
+            Place order successfully
+          </h3>
+        </div>
+        {/* <div className="grid grid-cols-2 my-10 gap-x-3">
           <div className="flex flex-col">
             <h3 className="mb-10 text-xl font-medium">
               Place order successfully
@@ -122,9 +109,9 @@ const CheckoutSuccess = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
-    </div>
+    </Container>
   );
 };
 

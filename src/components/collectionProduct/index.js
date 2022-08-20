@@ -4,8 +4,6 @@ import Button from "components/button";
 import styled from "styled-components";
 import TitlePage from "components/titlePage";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setBlogItem } from "redux-toolkit/global/globalSlice";
 const StyledDiv = styled.div`
   .title {
     color: ${(props) => props.theme.textTitle};
@@ -42,8 +40,8 @@ const CollectionProduct = () => {
 
   return (
     <StyledDiv>
+      <TitlePage collection title="All Collections" subTitle="Collections" />
       <div className="wrapper-layout">
-        <TitlePage collection title="All Collections" subTitle="Collections" />
         <div className="grid grid-cols-4 my-8 gap-x-5 gap-y-5">
           {productData.map((item) => (
             <div

@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react";
 import Button from "components/button";
-import SetQuantity from "components/setQuantity";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCartList,
-  setProductInfo,
-  setShowModal,
-} from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
 import swal from "sweetalert";
+import {
+  addToCart,
+  setProductView,
+  setShowQuickView,
+} from "redux-toolkit/cart/cartSlice";
 const StyledQuickView = styled.div`
   width: 100%;
   height: 100%;
   inset: 0;
   position: fixed;
   z-index: 999999;
+  @keyframes fadeIn {
+    0% {
+      transform: translateY(-100px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
   & .modal-quickview {
     background-color: ${(props) => props.theme.bgModal};
     will-change: scroll-position;
     scroll-behavior: smooth;
     overflow: hidden overlay;
+    animation: fadeIn ease 0.5s;
     &::-webkit-scrollbar {
       width: 6px;
     }
@@ -59,26 +68,26 @@ const StyledQuickView = styled.div`
 `;
 const QuickView = ({ data = [] }) => {
   const dispatch = useDispatch();
-  let { showModal, productInfo } = useSelector((state) => state.global);
-  let { id, productImage = [], title, price, quantity } = productInfo;
-  // console.log("product info", productInfo);
+  let { showModal, productView } = useSelector((state) => state.cart);
+  const { img = [], salePrice, title } = productView;
+  // console.log("product info", productView);
   const [currentImg, setCurrentImg] = useState("");
   useEffect(() => {
-    setCurrentImg(productImage[0]);
-  }, [productImage]);
+    setCurrentImg(img[0]);
+  }, [img]);
   const handleCloseModal = () => {
-    dispatch(setShowModal(false));
-    dispatch(setProductInfo({}));
+    dispatch(setShowQuickView(false));
+    dispatch(setProductView({}));
   };
   const handlePreviewProduct = (newProduct) => {
     setCurrentImg(newProduct);
   };
   const handleAddProductPreview = () => {
-    dispatch(setCartList(productInfo));
+    dispatch(addToCart(productView));
     swal("Sản phẩm thêm vào giỏ hàng thành công!", {
       icon: "success",
     });
-    dispatch(setShowModal(false));
+    dispatch(setShowQuickView(false));
   };
   if (typeof document === "undefined")
     return <div className="modal-biography"></div>;
@@ -102,7 +111,7 @@ const QuickView = ({ data = [] }) => {
               <img src={currentImg} alt="" />
             </div>
             <div className="flex justify-start gap-x-4">
-              {productImage.map((item, index) => {
+              {img?.map((item, index) => {
                 return (
                   <div
                     onClick={() => handlePreviewProduct(item)}
@@ -129,7 +138,7 @@ const QuickView = ({ data = [] }) => {
               <p className="text-base font-semibold quickview-header">
                 Effective Price :
               </p>
-              <h2 className="text-sm font-semibold">{price}</h2>
+              <h2 className="text-sm font-semibold">{salePrice}</h2>
             </div>
             <div className="flex items-center mb-5">
               <p className="text-base font-semibold quickview-header">
@@ -146,7 +155,7 @@ const QuickView = ({ data = [] }) => {
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Quantity</h3>
-                <SetQuantity quantity={quantity} productId={id} />
+                {/* <SetQuantity quantity={quantity} /> */}
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Subtotal:</h3>

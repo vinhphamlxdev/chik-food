@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { DecQuantity, IncQuantity } from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
 const StyledSetQuan = styled.div`
   .btn-inc,
@@ -33,12 +32,8 @@ const StyledSetQuan = styled.div`
 `;
 const SetQuantity = ({ quantity = 1, productId }) => {
   const dispatch = useDispatch();
-  const handleDec = (id) => {
-    dispatch(DecQuantity(id));
-  };
-  const handleInc = (id) => {
-    dispatch(IncQuantity(id));
-  };
+  const handleDec = (id) => {};
+  const handleInc = (id) => {};
   return (
     <StyledSetQuan className="flex items-center">
       <div onClick={() => handleDec(productId)} className="select-none btn-dec">

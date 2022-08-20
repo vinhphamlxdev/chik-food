@@ -1,7 +1,9 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import globalSlice from "./global/globalSlice";
+import cartReducer from "./cart/cartSlice";
+import globalReducer from "./global/globalSlice";
 const reducer = combineReducers({
-  global: globalSlice,
+  global: globalReducer,
+  cart: cartReducer,
 });
 const store = configureStore({
   reducer: reducer,

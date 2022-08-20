@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setProductInfo, setShowModal } from "redux-toolkit/global/globalSlice";
+import { setProductView, setShowQuickView } from "redux-toolkit/cart/cartSlice";
 
 const MenuItem = ({ item = {} }) => {
   const { productImage, title, price } = item;
   const dispatch = useDispatch();
   const handleShowQuickView = (item) => {
-    dispatch(setShowModal(true));
-    dispatch(setProductInfo(item));
+    dispatch(setShowQuickView(true));
+    dispatch(setProductView(item));
   };
   return (
     <div

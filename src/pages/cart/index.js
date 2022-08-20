@@ -5,14 +5,13 @@ import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
 import { useNavigate } from "react-router-dom";
 import Container from "components/container";
+import { cartItemsTotalSelector } from "redux-toolkit/cart/selectors";
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const { cartList } = useSelector((state) => state.global);
-
-  const totalCoin = cartList.reduce((total, product) => {
-    return total + product.price * product.quantity;
-  }, 0);
+  const { cartItems } = useSelector((state) => state.cart);
+  console.log(cartItems);
+  const cartItemsTotal = useSelector(cartItemsTotalSelector);
   return (
     <Container>
       <TitlePage title="Your Shopping Cart" subTitle="Your Shopping Cart" />
@@ -38,8 +37,8 @@ const CartPage = () => {
                 </div>
               </div>
             </div>
-            {cartList.length > 0 ? (
-              cartList.map((item, index) => {
+            {cartItems.length > 0 ? (
+              cartItems.map((item, index) => {
                 return <CartItem key={index} item={item} />;
               })
             ) : (
@@ -52,7 +51,7 @@ const CartPage = () => {
               <div className="flex items-center gap-x-2">
                 <h3 className="text-lg font-medium">Subtotal :</h3>
                 <span className="text-lg font-semibold text-primary">
-                  {totalCoin}
+                  {cartItemsTotal}
                 </span>
               </div>
               <p className="text-base italic">
@@ -62,7 +61,11 @@ const CartPage = () => {
                 <Button onClick={() => navigate("/shop")}>
                   Continue shopping
                 </Button>
-                <Button onClick={() => navigate("/checkout")}>Check Out</Button>
+                {cartItems.length > 0 && (
+                  <Button onClick={() => navigate("/checkout")}>
+                    Check Out
+                  </Button>
+                )}
               </div>
             </div>
           </div>

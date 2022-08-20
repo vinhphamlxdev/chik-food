@@ -2,12 +2,12 @@ import React from "react";
 import Icon from "components/Icon";
 import swal from "sweetalert";
 import { useDispatch } from "react-redux";
-import {
-  setCartList,
-  setProductInfo,
-  setShowModal,
-} from "redux-toolkit/global/globalSlice";
 import styled from "styled-components";
+import {
+  addToCart,
+  setProductView,
+  setShowQuickView,
+} from "redux-toolkit/cart/cartSlice";
 const StyledProducts = styled.div`
   transition: 0.5s all;
   border: 1px solid #f4f4f4;
@@ -57,12 +57,30 @@ const StyledProducts = styled.div`
 `;
 const ProductItem = ({ items = [] }) => {
   const dispatch = useDispatch();
-  const handleShowModal = (productItem) => {
-    dispatch(setShowModal(true));
-    dispatch(setProductInfo(productItem));
+  const handleShowModal = (product) => {
+    dispatch(setShowQuickView(true));
+    console.log(product);
+    dispatch(
+      setProductView({
+        id: product.id,
+        title: product.title,
+        salePrice: product.price,
+        img: [...product.productImage],
+        quantity: product.quantity,
+      })
+    );
   };
-  const handleAddProduct = (productItem) => {
-    dispatch(setCartList(productItem));
+  const handleAddProduct = (product) => {
+    console.log(product);
+    dispatch(
+      addToCart({
+        id: product.id,
+        quantity: product.quantity,
+        img: [...product.productImage],
+        title: product.title,
+        salePrice: product.price,
+      })
+    );
     swal("Sản phẩm thêm vào giỏ hàng thành công!", {
       icon: "success",
     });
