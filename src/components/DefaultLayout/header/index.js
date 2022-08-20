@@ -10,6 +10,7 @@ import { auth } from "firebase-app/firebase-config";
 import swal from "sweetalert";
 import { useAuth } from "contexts/auth-context";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 const StyledHeader = styled.header`
   width: 100%;
   z-index: 99;
@@ -62,23 +63,15 @@ const StyledHeader = styled.header`
 `;
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { cartList, bgHeader } = useSelector((state) => state.global);
   const { userInfo, setUserInfo } = useAuth();
   console.log(userInfo);
   const totalQuantity = () => {
-    // Dung for
-    // let total = 0;
-    // for (let index = 0; index < cartList.length; index++) {
-    //   let productItem = cartList[index];
-    //   total += productItem.quantity;
-    // }
-    // return total;
-    // Dung reduce
     return cartList.reduce((total, productItem, index) => {
       return (total += productItem.quantity);
     }, 0);
   };
+  const quantity = totalQuantity();
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -103,8 +96,14 @@ const Header = () => {
       });
   };
   const handleRedirectCartPage = () => {
-    if (totalQuantity === 0) return;
-    else navigate("/cart");
+    if (quantity === 0) {
+      toast.error("Your cart is currently empty!", {
+        autoClose: 1500,
+        pauseOnHover: false,
+      });
+    } else {
+      navigate("/cart");
+    }
   };
   return (
     <StyledHeader className={`${bgHeader ? "isSticky" : ""}`}>
@@ -142,18 +141,18 @@ const Header = () => {
             </div>
             <div
               onClick={handleRedirectCartPage}
-              className="py-6 relative px-[10px] text-inherit"
+              className="py-6 select-none relative px-[10px] text-inherit"
             >
               <i className="bi leading-[0px] cursor-pointer text-lg text-inherit bi-cart-plus-fill"></i>
               <span className="absolute top-4 right-1 flex items-center justify-center w-4 leading-[0] h-4 text-sm font-light text-white rounded-full bg-primary">
-                {totalQuantity()}
+                {quantity}
               </span>
             </div>
-            <div className="py-6 relative user-icon px-[10px] gap-x-2 text-inherit">
+            <div className="relative user-icon px-[10px] gap-x-2 text-inherit">
               <i className="bi text-lg text-inherit leading-[0px] cursor-pointer bi-person-fill"></i>
 
               {userInfo ? (
-                <div className="absolute user-list  items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-3/4 gap-y-4">
+                <div className="absolute user-list  items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-[130%] gap-y-4">
                   <div className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2">
                     <div className="relative overflow-hidden rounded-full w-7 h-7 whitespace-nowrap">
                       <img
@@ -177,7 +176,7 @@ const Header = () => {
                   </div>
                 </div>
               ) : (
-                <div className="absolute user-list opacity-0 invisible items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-3/4 gap-y-4">
+                <div className="absolute user-list opacity-0 invisible items-start right-0 w-[210px] rounded-sm shadow-[0_0_30px_#00000026] z-30 flex flex-col p-5 bg-white top-[130%] gap-y-4">
                   <div
                     onClick={() => navigate("/sign-in")}
                     className="flex items-center text-sm font-normal cursor-pointer hover:text-primary gap-x-2"

@@ -11,88 +11,52 @@ import Button from "components/button";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-const schema = yup.object({
-  fullname: yup.string().required("Please enter your fullname"),
-  email: yup
-    .string()
-    .email("Please enter valid email address")
-    .required("Please enter your email address"),
-  phonenumber: yup.number().required("Please enter your phone number"),
-  address: yup.string().required("Please enter your address"),
-});
-const Checkout = () => {
-  const navigate = useNavigate();
+
+const CheckoutSuccess = () => {
   const { cartList } = useSelector((state) => state.global);
   const priceShipping = 2000;
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isValid, isSubmitting },
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-  });
+
   const totalCoin = cartList.reduce((total, product) => {
     return total + product.price * product.quantity;
   }, 0);
-  const handleCheckout = async (values) => {
-    if (!isValid) return;
-  };
-  useEffect(() => {
-    const arrErroes = Object.values(errors);
-    if (arrErroes.length > 0) {
-      toast.error(arrErroes[0]?.message, {
-        pauseOnHover: false,
-        delay: 0,
-      });
-    }
-  }, [errors]);
+
   return (
     <div>
       <TitlePage title="Checkout" subTitle="Checkout" />
       <div className="wrapper-layout">
-        <form
-          onSubmit={handleSubmit(handleCheckout)}
-          autoComplete="off"
-          className="grid grid-cols-2 my-10 gap-x-3"
-        >
+        <div className="grid grid-cols-2 my-10 gap-x-3">
           <div className="flex flex-col">
-            <h3 className="mb-10 text-xl font-medium">Contact information</h3>
+            <h3 className="mb-10 text-xl font-medium">
+              Place order successfully
+            </h3>
             <div className="flex flex-col ">
-              <Field>
-                <Input
-                  type="text"
-                  name="fullname"
-                  placeholder="Enter your fullname"
-                  control={control}
-                />
-              </Field>
-              <Field>
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  control={control}
-                />
-              </Field>
-              <Field>
-                <Input
-                  type="number"
-                  name="phonenumber"
-                  placeholder="Phone number"
-                  control={control}
-                />
-              </Field>
-
-              <Field>
-                <Input
-                  type="text"
-                  name="address"
-                  placeholder="Address"
-                  control={control}
-                />
-              </Field>
+              <div className="flex flex-col p-5 border border-gray-300 rounded-sm gap-y-4">
+                <div className="flex items-center p-3 border-b border-gray-300 gap-x-6 ">
+                  <span className="text-sm font-light whitespace-nowrap text-textColor">
+                    Contact
+                  </span>
+                  <p className="text-sm font-normal text-textPrimary">
+                    Vinhpham@gmail.com
+                  </p>
+                </div>
+                <div className="flex items-center p-3 border-b border-gray-300 gap-x-6 ">
+                  <span className="text-sm font-light whitespace-nowrap text-textColor">
+                    Ship to
+                  </span>
+                  <p className="text-sm font-normal text-justify text-textPrimary">
+                    2048 tran hung dao, long xuyen, an giang, vinhome, tp hcm
+                    1616165, Vietnam
+                  </p>
+                </div>
+                <div className="flex items-center p-3 border-b border-gray-300 gap-x-6 ">
+                  <span className="text-sm font-light whitespace-nowrap text-textColor">
+                    Method
+                  </span>
+                  <p className="text-sm font-normal text-justify text-textPrimary">
+                    International Shipping · $20.00
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex bg-[#fafafa] py-5 pl-5 pr-3 flex-col">
@@ -157,21 +121,11 @@ const Checkout = () => {
                 ${(totalCoin + priceShipping).toLocaleString()}
               </p>
             </div>
-            <div className="flex justify-end mt-5 text-right">
-              <Button
-                isLoading={isSubmitting}
-                disabled={isSubmitting}
-                height="50px"
-                type="submit"
-              >
-                Place Order
-              </Button>
-            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Checkout;
+export default CheckoutSuccess;
