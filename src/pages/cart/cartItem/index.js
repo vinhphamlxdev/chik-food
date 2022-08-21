@@ -1,20 +1,42 @@
 import React from "react";
-import SetQuantity from "components/setQuantity";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { removeCartItem } from "redux-toolkit/global/globalSlice";
 import swal from "sweetalert";
-import { removeFromCart } from "redux-toolkit/cart/cartSlice";
-
+import { removeFromCart, setQuantity } from "redux-toolkit/cart/cartSlice";
 const StyledCartItem = styled.div`
   border-bottom: 1px solid #e4e4e4;
   border-left: 1px solid #e4e4e4;
   border-right: 1px solid #e4e4e4;
+  .btn-increase,
+  .btn-decrease {
+    line-height: 0;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e4e4e4;
+    cursor: pointer;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    transition: all 0.4s ease-in-out;
+  }
+  .cart-quantity {
+    font-weight: 300;
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    text-align: center;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
 `;
 
 const CartItem = ({ item = {} }) => {
   const dispatch = useDispatch();
   const { id, img = [], salePrice, title, quantity } = item;
+  console.log("cart item:", item);
   const handleRemoveProduct = (productId) => {
     swal({
       title: "Are you sure?",
@@ -30,7 +52,9 @@ const CartItem = ({ item = {} }) => {
       }
     });
   };
-
+  const updateQuantity = (type) => {
+    dispatch(setQuantity({ id, type }));
+  };
   return (
     <StyledCartItem className="flex cart-row">
       <div className="flex w-5/12 gap-x-1">
@@ -48,8 +72,21 @@ const CartItem = ({ item = {} }) => {
         <div className="text-lg font-semibold flex-center text-primary">
           ${salePrice}
         </div>
-        <div className="flex-center">
-          <SetQuantity quantity={quantity} productId={id} />
+        <div className="flex items-center">
+          <div
+            onClick={() => updateQuantity("-")}
+            className="select-none btn-decrease"
+          >
+            -
+          </div>
+          <div className="cart-quantity">{quantity}</div>
+
+          <div
+            onClick={() => updateQuantity("+")}
+            className="select-none btn-increase"
+          >
+            +
+          </div>
         </div>
         <div className="text-lg font-semibold flex-center text-primary">
           ${quantity * salePrice}

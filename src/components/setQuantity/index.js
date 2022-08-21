@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 const StyledSetQuan = styled.div`
   .btn-inc,
@@ -30,22 +29,19 @@ const StyledSetQuan = styled.div`
     -webkit-appearance: none;
   }
 `;
-const SetQuantity = ({ quantity = 1, productId }) => {
-  const dispatch = useDispatch();
-  const handleDec = (id) => {};
-  const handleInc = (id) => {};
+const SetQuantity = ({
+  value = 1,
+  handleDec = () => {},
+  handleInc = () => {},
+}) => {
   return (
     <StyledSetQuan className="flex items-center">
-      <div onClick={() => handleDec(productId)} className="select-none btn-dec">
+      <div onClick={handleDec} className="select-none btn-dec">
         -
       </div>
-      <input
-        onChange={() => {}}
-        className="quickview-quantity"
-        type="number"
-        value={quantity}
-      />
-      <div onClick={() => handleInc(productId)} className="select-none btn-inc">
+      <div className="quickview-quantity">{value}</div>
+
+      <div onClick={handleInc} className="select-none btn-inc">
         +
       </div>
     </StyledSetQuan>

@@ -59,26 +59,22 @@ const ProductItem = ({ items = [] }) => {
   const dispatch = useDispatch();
   const handleShowModal = (product) => {
     dispatch(setShowQuickView(true));
-    console.log(product);
     dispatch(
       setProductView({
         id: product.id,
         title: product.title,
-        salePrice: product.price,
-        img: [...product.productImage],
-        quantity: product.quantity,
+        salePrice: product.salePrice,
+        img: [...product.img],
       })
     );
   };
-  const handleAddProduct = (product) => {
-    console.log(product);
+  const handleAddToCart = (product) => {
     dispatch(
       addToCart({
         id: product.id,
-        quantity: product.quantity,
-        img: [...product.productImage],
+        img: [...product.img],
         title: product.title,
-        salePrice: product.price,
+        salePrice: product.salePrice,
       })
     );
     swal("Sản phẩm thêm vào giỏ hàng thành công!", {
@@ -95,11 +91,11 @@ const ProductItem = ({ items = [] }) => {
   return (
     <>
       {items.map((item, index) => {
-        const { id, productImage = [], title, price } = item;
+        const { id, img = [], title, salePrice } = item;
         return (
           <StyledProducts key={id} className="relative products-item">
             <div className="absolute add-cart-list   flex z-20 flex-col gap-y-[2px] top-[2px]">
-              <Icon onClick={() => handleAddProduct(item)}>
+              <Icon onClick={() => handleAddToCart(item)}>
                 <i className="text-sm bi text-inherit leading-[0px] bi-cart-plus-fill"></i>
               </Icon>
               <Icon onClick={() => handleShowModal(item)}>
@@ -111,16 +107,16 @@ const ProductItem = ({ items = [] }) => {
             </div>
             <div className="relative overflow-hidden product-img">
               <div className="product-add">
-                <img src={productImage[1]} alt="" />
+                <img src={img[1]} alt="" />
               </div>
-              <img src={productImage[0]} alt="" />
+              <img src={img[0]} alt="" />
             </div>
             <div className="px-[10px] products-content bg-[#f4f4f4] py-5 flex flex-col items-center">
               <span className="text-sm transition-5 cursor-pointer font-semibold mb-4 tracking-[0px] title">
                 {title}
               </span>
               <div className="text-xl font-medium transition-5 price">
-                ${price.toLocaleString()}
+                ${salePrice.toLocaleString()}
               </div>
               <div className="flex py-2">
                 {Array(5)

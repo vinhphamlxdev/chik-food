@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 export const globalSlice = createSlice({
   name: "cart",
   initialState: {
@@ -25,10 +26,23 @@ export const globalSlice = createSlice({
       }
     },
     setQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const index = state.cartItems.findIndex((item) => item === id);
-      if (index >= 0) {
-        state.cartItems[index].quantity += quantity;
+      const { id, type } = action.payload;
+      const index = state.cartItems.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        if (type === "+") {
+          state.cartItems[index].quantity += 1;
+        } else {
+          if (type === "-") {
+            if (state.cartItems[index].quantity > 1) {
+              state.cartItems[index].quantity -= 1;
+            } else {
+              Swal.fire({
+                text: "So luong toi thieu phai la 1",
+                icon: "error",
+              });
+            }
+          }
+        }
       }
     },
     removeFromCart: (state, action) => {

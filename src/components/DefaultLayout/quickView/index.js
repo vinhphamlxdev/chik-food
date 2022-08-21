@@ -9,6 +9,9 @@ import {
   setProductView,
   setShowQuickView,
 } from "redux-toolkit/cart/cartSlice";
+import SetQuantity from "components/setQuantity";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 const StyledQuickView = styled.div`
   width: 100%;
   height: 100%;
@@ -68,27 +71,48 @@ const StyledQuickView = styled.div`
 `;
 const QuickView = ({ data = [] }) => {
   const dispatch = useDispatch();
-  let { showModal, productView } = useSelector((state) => state.cart);
+  let { showModal, productView, cartItems } = useSelector(
+    (state) => state.cart
+  );
   const { img = [], salePrice, title } = productView;
-  // console.log("product info", productView);
   const [currentImg, setCurrentImg] = useState("");
-  useEffect(() => {
-    setCurrentImg(img[0]);
-  }, [img]);
-  const handleCloseModal = () => {
-    dispatch(setShowQuickView(false));
-    dispatch(setProductView({}));
+  const [quantity, setQuantity] = useState(1);
+  console.log("cartItems:", cartItems);
+
+  const handleInc = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleDec = () => {
+    setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
   };
   const handlePreviewProduct = (newProduct) => {
     setCurrentImg(newProduct);
   };
   const handleAddProductPreview = () => {
-    dispatch(addToCart(productView));
+    dispatch(
+      addToCart({
+        id: productView.id,
+        img: [...productView.img],
+        title: productView.title,
+        quantity,
+        salePrice: productView.salePrice,
+      })
+    );
     swal("Sản phẩm thêm vào giỏ hàng thành công!", {
       icon: "success",
     });
     dispatch(setShowQuickView(false));
   };
+  const handleCloseModal = () => {
+    dispatch(setShowQuickView(false));
+    dispatch(setProductView({}));
+    setQuantity(1);
+  };
+  useEffect(() => {
+    setCurrentImg(img[0]);
+    setQuantity(1);
+  }, [img]);
+
   if (typeof document === "undefined")
     return <div className="modal-biography"></div>;
   return ReactDOM.createPortal(
@@ -155,11 +179,15 @@ const QuickView = ({ data = [] }) => {
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Quantity</h3>
-                {/* <SetQuantity quantity={quantity} /> */}
+                <SetQuantity
+                  handleDec={handleDec}
+                  handleInc={handleInc}
+                  value={quantity}
+                />
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Subtotal:</h3>
-                <h2 className="text-sm font-semibold">$1,090.00</h2>
+                <h2 className="text-sm font-semibold">${quantity.salePrice}</h2>
               </div>
               <div className="flex justify-start mt-4">
                 <Button onClick={handleAddProductPreview} className="font-bold">

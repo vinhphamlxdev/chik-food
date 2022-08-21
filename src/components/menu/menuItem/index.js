@@ -3,11 +3,18 @@ import { useDispatch } from "react-redux";
 import { setProductView, setShowQuickView } from "redux-toolkit/cart/cartSlice";
 
 const MenuItem = ({ item = {} }) => {
-  const { productImage, title, price } = item;
+  const { img = [], title, salePrice } = item;
   const dispatch = useDispatch();
   const handleShowQuickView = (item) => {
     dispatch(setShowQuickView(true));
-    dispatch(setProductView(item));
+    dispatch(
+      setProductView({
+        id: item.id,
+        title: item.title,
+        img: [...item.img],
+        salePrice: item.salePrice,
+      })
+    );
   };
   return (
     <div
@@ -16,9 +23,9 @@ const MenuItem = ({ item = {} }) => {
     >
       <div className="relative cursor-pointer product-container overflow-hidden w-[25%]">
         <div className="relative product-additional">
-          <img className="object-cover w-full" src={productImage[1]} alt="" />
+          <img className="object-cover w-full" src={img[1]} alt="" />
         </div>
-        <img className="object-cover w-full" src={productImage[0]} alt="" />
+        <img className="object-cover w-full" src={img[0]} alt="" />
       </div>
       <div className="h-full transition-all duration-500 product-detail-bg">
         <div className="flex justify-between w-full product-detail">
@@ -32,7 +39,7 @@ const MenuItem = ({ item = {} }) => {
           </div>
           <div className="absolute flex flex-col items-center justify-center product-price">
             <span className="text-base font-light price text-primary">
-              {price}
+              {salePrice}
             </span>
             <div className="flex py-1 gap-x-1">
               {Array(4)
