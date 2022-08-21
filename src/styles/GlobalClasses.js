@@ -115,4 +115,7 @@ export const GlobalClasses = css`
       font-size: 50px;
     }
   }
+  //Responsive
+  @media only screen and (max-width: 1024px) {
+  }
 `;

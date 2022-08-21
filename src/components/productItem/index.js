@@ -75,6 +75,7 @@ const ProductItem = ({ items = [] }) => {
         img: [...product.img],
         title: product.title,
         salePrice: product.salePrice,
+        quantity: 1,
       })
     );
     swal("Sản phẩm thêm vào giỏ hàng thành công!", {

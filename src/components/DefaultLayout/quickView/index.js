@@ -77,7 +77,7 @@ const QuickView = ({ data = [] }) => {
   const { img = [], salePrice, title } = productView;
   const [currentImg, setCurrentImg] = useState("");
   const [quantity, setQuantity] = useState(1);
-  console.log("cartItems:", cartItems);
+  console.log("cart List:", cartItems);
 
   const handleInc = () => {
     setQuantity(quantity + 1);
@@ -162,7 +162,7 @@ const QuickView = ({ data = [] }) => {
               <p className="text-base font-semibold quickview-header">
                 Effective Price :
               </p>
-              <h2 className="text-sm font-semibold">{salePrice}</h2>
+              <h2 className="text-sm font-semibold">${salePrice}</h2>
             </div>
             <div className="flex items-center mb-5">
               <p className="text-base font-semibold quickview-header">
@@ -187,7 +187,9 @@ const QuickView = ({ data = [] }) => {
               </div>
               <div className="flex items-center">
                 <h3 className="quickview-header">Subtotal:</h3>
-                <h2 className="text-sm font-semibold">${quantity.salePrice}</h2>
+                <h2 className="text-sm font-semibold">
+                  ${quantity * salePrice}
+                </h2>
               </div>
               <div className="flex justify-start mt-4">
                 <Button onClick={handleAddProductPreview} className="font-bold">

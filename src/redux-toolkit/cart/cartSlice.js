@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
+const items =
+  localStorage.getItem("cartItems") !== null
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [];
 export const globalSlice = createSlice({
   name: "cart",
   initialState: {
@@ -19,7 +23,7 @@ export const globalSlice = createSlice({
       const index = state.cartItems.findIndex(
         (item) => item.id === newProduct.id
       );
-      if (index >= 0) {
+      if (index !== -1) {
         state.cartItems[index].quantity += newProduct.quantity;
       } else {
         state.cartItems.push(newProduct);
@@ -37,7 +41,7 @@ export const globalSlice = createSlice({
               state.cartItems[index].quantity -= 1;
             } else {
               Swal.fire({
-                text: "So luong toi thieu phai la 1",
+                text: "Số lượng tối thiểu phải là 1",
                 icon: "error",
               });
             }
@@ -51,6 +55,10 @@ export const globalSlice = createSlice({
         (item) => item.id !== idNeedToRemove
       );
     },
+    // remove all product of cart
+    removeAllProduct: (state, action) => {
+      state.cartItems = action.payload;
+    },
   },
 });
 export const {
@@ -59,5 +67,6 @@ export const {
   addToCart,
   setQuantity,
   removeFromCart,
+  removeAllProduct,
 } = globalSlice.actions;
 export default globalSlice.reducer;

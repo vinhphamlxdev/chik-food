@@ -6,12 +6,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "components/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Container from "components/container";
 import { cartItemsTotalSelector } from "redux-toolkit/cart/selectors";
+import { removeAllProduct } from "redux-toolkit/cart/cartSlice";
+import Swal from "sweetalert2";
 const schema = yup.object({
   fullname: yup.string().required("Please enter your fullname"),
   email: yup
@@ -23,9 +25,9 @@ const schema = yup.object({
 });
 const Checkout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const cartItemsTotal = useSelector(cartItemsTotalSelector);
-
   const priceShipping = 2000;
   const {
     control,
@@ -38,7 +40,14 @@ const Checkout = () => {
 
   const handleCheckout = async (values) => {
     if (!isValid) return;
-    else navigate("/checkout-success");
+    else {
+      Swal.fire({
+        text: "Place order successfully",
+        icon: "success",
+      });
+      dispatch(removeAllProduct([]));
+      navigate("/checkout-success");
+    }
   };
   useEffect(() => {
     const arrErroes = Object.values(errors);

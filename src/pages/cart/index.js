@@ -3,6 +3,7 @@ import TitlePage from "components/titlePage";
 import Button from "components/button";
 import { useSelector } from "react-redux";
 import CartItem from "./cartItem";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "components/container";
 import { cartItemsTotalSelector } from "redux-toolkit/cart/selectors";
@@ -12,6 +13,10 @@ const CartPage = () => {
   const { cartItems } = useSelector((state) => state.cart);
   console.log(cartItems);
   const cartItemsTotal = useSelector(cartItemsTotalSelector);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Container>
       <TitlePage title="Your Shopping Cart" subTitle="Your Shopping Cart" />
